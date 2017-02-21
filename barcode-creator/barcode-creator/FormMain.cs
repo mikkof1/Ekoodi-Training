@@ -37,6 +37,7 @@ namespace barcode_creator
             endMakeingBarcode = accountIbanNumber.Length != 16;
             if (endMakeingBarcode) return;
 
+            string virtualBarCode = "";
             string versionNumber = "4";
 
             bool internationalVirtualBarcode = cbxInternational.Checked;
@@ -44,39 +45,29 @@ namespace barcode_creator
             {
                 versionNumber = "5";
 
-                string referenceNumber = txbReferenceNumber.Text;
+                string referenceNumber = GetReferenceNumber();
                 endMakeingBarcode = referenceNumber.Length != 20;
                 if (endMakeingBarcode) return;
 
+                
 
-
-
-            } // end if (internationalVirtualBarcode)
+            } 
 
             else
             {
 
-                string referenceNumber = txbReferenceNumber.Text;
+                string referenceNumber = GetReferenceNumber();
                 endMakeingBarcode = referenceNumber.Length != 20;
                 if (endMakeingBarcode) return;
 
                 string backUpSpace = "000";
 
-
-
-
+                virtualBarCode = versionNumber + accountIbanNumber + paymentEuros + backUpSpace + referenceNumber +
+                                 paymentDate;
 
             }
 
-
-
-
-
-
-
-
-
-
+            txbVirtualBarcode.Text = virtualBarCode;
 
             string firstEmptySpace = "";
             string firstMark = "";
@@ -133,7 +124,7 @@ namespace barcode_creator
 
         private string GetPaymentEuros()
         {
-            
+
             bool paymentIsEmpty = txbMoneySummarium.Text == string.Empty;
             if (paymentIsEmpty)
             {
@@ -156,14 +147,7 @@ namespace barcode_creator
 
             string returnValue = "";
             bool paymentIsBigerThenZero = paymentSummarium > 0;
-            if (paymentIsBigerThenZero)
-            {
-                returnValue = MakeMoneyString(paymentSummarium);
-            } 
-            else
-            {
-                returnValue = "00000000";
-            }
+            returnValue = paymentIsBigerThenZero ? MakeMoneyString(paymentSummarium) : "00000000";
 
             return returnValue;
 
@@ -229,6 +213,68 @@ namespace barcode_creator
                 return returnValue;
             }
 
+            string plainNumber = GetPlainAccountNumber(originalAccountNumber);
+
+
+            bool correctLenghtIbanNumber = CorrectIbanNumberTest(plainNumber);
+            if (correctLenghtIbanNumber)
+            {
+                IbanNumberHandler ibanNumberTest = new IbanNumberHandler();
+                bool correctIbanNumber = ibanNumberTest.CheckIbanNumber(plainNumber);
+                if (correctIbanNumber)
+                {
+                    returnValue = plainNumber.Substring(2);
+                    return returnValue;
+                }
+                else
+                {
+                    MessageBox.Show("Tilinumero on väärin", "Virheellinen tieto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return returnValue;
+                }
+            }
+            else // new IBAN number
+            {
+                IbanNumberHandler newIbanNumber = new IbanNumberHandler();
+                string accountNumber = newIbanNumber.CalculateFinnishIbanNumber(plainNumber);
+
+                bool ibanNumberIsCorrect = accountNumber.Length == 18;
+                if (ibanNumberIsCorrect)
+                {
+                    MessageBox.Show("Tilinumero muutetaan IBAN muotoon", "Virheellinen tieto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    returnValue = accountNumber.Substring(2);
+                    return returnValue;
+                }
+                else
+                {
+                    MessageBox.Show("Tilinumero on väärin", "Virheellinen tieto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return returnValue;
+                }
+            }
+
+        } // end GetAccountIbanNumber()
+
+        private bool CorrectIbanNumberTest(string plainNumber)
+        {
+            bool wrongIbanLenght = plainNumber.Length != 18;
+            if (wrongIbanLenght) return false;
+
+            string ibanCountryMarks = plainNumber.Substring(0, 2).ToUpper();
+
+            bool firstMarkIsWrong = !char.IsLetter(ibanCountryMarks[0]);
+            if (firstMarkIsWrong) return false;
+
+            bool secondMarkIsWrong = !char.IsLetter(ibanCountryMarks[1]);
+            if (secondMarkIsWrong) return false;
+
+            return true;
+
+        } // end CorrectIbanNumber
+
+
+
+        private string GetPlainAccountNumber(string originalAccountNumber)
+        {
             string plainNumber = "";
             int letterCount = 0;
             foreach (char currentChar in originalAccountNumber)
@@ -248,112 +294,143 @@ namespace barcode_creator
                         bool tooManyWrongChars = letterCount > 2;
                         if (tooManyWrongChars)
                         {
-                            MessageBox.Show("Väärä tilinumero", "Virheellinen tieto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            return returnValue;
+                            return "";
                         }
-                    }// if (thisIsLetter)
-
-                }// else (thisCharIsNumber)
-
-            }// foreach
-
-            string ibanCountryMarks = plainNumber.Substring(0, 2).ToUpper();
-            bool correctLenghtIbanNumber = plainNumber.Length == 18 && ibanCountryMarks == "FI";
-            if (correctLenghtIbanNumber)
-            {
-                IbanNumberHandler ibanNumberTest = new IbanNumberHandler();
-                bool correctIbanNumber = ibanNumberTest.CheckIbanNumber(plainNumber);
-                if (correctIbanNumber)
-                {
-                    returnValue = plainNumber.Substring(2);
-                    return returnValue;
-                }
-                else
-                {
-                    MessageBox.Show("Tilinumero on väärin", "Virheellinen tieto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return returnValue;
-                }
-            }
-            else // new IBAN number
-            {
-                DialogResult wrongAccountDialog = MessageBox.Show("Haluatko muuttaa tilinumeron IBAN tilinumeroksi?", "Virheellinen tieto", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-
-                if (wrongAccountDialog == DialogResult.No)
-                {
-                    return returnValue;
-                }
-
-                IbanNumberHandler newIbanNumber = new IbanNumberHandler();
-                string accountNumber = newIbanNumber.CalculateFinnishIbanNumber(plainNumber);
-
-                bool ibanNumberIsCorrect = accountNumber.Length == 18;
-                if (ibanNumberIsCorrect)
-                {
-                    returnValue = accountNumber.Substring(2);
-                    return returnValue;
-                }
-                else
-                {
-                    MessageBox.Show("Tilinumero on väärin", "Virheellinen tieto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return returnValue;
+                    }
                 }
             }
 
-        } // end GetAccountIbanNumber()
+            return plainNumber;
+
+        }// end GetPlainAccountNumber
+
 
         private string GetReferenceNumber()
         {
             string returnValue = "";
+            string originalReferenceNumber = txbReferenceNumber.Text;
+
+            bool referenceNumberIsEmpty = CheckEmptyReferenceNumber(originalReferenceNumber);
+            if (referenceNumberIsEmpty) return returnValue;
 
             ReferenceNumberHandler referenceNumberTest = new ReferenceNumberHandler();
-            string plainReferenceNumber = referenceNumberTest.MakePlainReferenceNumber(txbReferenceNumber.Text);
-            if (plainReferenceNumber.Length < 8 || plainReferenceNumber.Length > 20)
-            {
-                MessageBox.Show("Viitenumeron pituus on virheellinen", "Virheellinen tieto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return returnValue;
-            }
+            string plainReferenceNumber = referenceNumberTest.MakePlainReferenceNumber(originalReferenceNumber);
 
             bool correctReferenceNumber = referenceNumberTest.CheckFinnishReferenceNumber(plainReferenceNumber);
             if (correctReferenceNumber)
             {
-                int addZeroCount = 20 - plainReferenceNumber.Length;
-
-                string referenceNumberFirstZeros = "";
-                for (int referenceZeroIndex = 0; referenceZeroIndex < addZeroCount; referenceZeroIndex++)
-                {
-                    referenceNumberFirstZeros += "0";
-                }
-
-                returnValue = referenceNumberFirstZeros + plainReferenceNumber;
+                string firstZeros = ReferenceNumberFirstZeros(plainReferenceNumber);
+                returnValue = firstZeros + plainReferenceNumber;
                 return returnValue;
             }
             else
             {
-                DialogResult wrongReferenceDialog = MessageBox.Show("Haluatko laskea viitenumeron tarkisteen uudelleen?", "Virheellinen viitenumero", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                ReferenceNumberHandler newReferenceNumberHandler = new ReferenceNumberHandler();
+                string newReferenceNumber = newReferenceNumberHandler.MakeFinnishReferenceNumber(plainReferenceNumber);
 
-                if (wrongReferenceDialog == DialogResult.No)
+                bool correctNewReferenceNumber = referenceNumberTest.CheckFinnishReferenceNumber(newReferenceNumber);
+                if (correctNewReferenceNumber)
                 {
-                    return returnValue;
+                    DialogResult wrongReferenceDialog = MessageBox.Show(
+                        "Haluatko laskea viitenumeron tarkisteen uudelleen?", "Virheellinen viitenumero",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+                    if (wrongReferenceDialog == DialogResult.No)
+                    {
+                        return returnValue;
+                    }
+                    else
+                    {
+                        string firstZeros = ReferenceNumberFirstZeros(plainReferenceNumber);
+                        returnValue = firstZeros + newReferenceNumber;
+                        return returnValue;
+                    }
                 }
                 else
                 {
-
-
-
-
-
-
-
-
-
-
-
-
+                    MessageBox.Show("Viitenumero on virheellinen", "Virheellinen tieto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return returnValue;
                 }
-
             }
-            return returnValue;
-        }
+
+
+        } // end GetReferenceNumber
+
+
+        private bool CheckEmptyReferenceNumber(string originalReferenceNumber)
+        {
+            bool referenceNumberIsEmpty = originalReferenceNumber == string.Empty;
+            if (referenceNumberIsEmpty)
+            {
+                MessageBox.Show("Viitenumero puuttuu", "Puutteellinen tieto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return true;
+            }
+            return false;
+
+        } // end CheckFillReferenceNumber
+
+
+        private string ReferenceNumberFirstZeros(string referenceNumber)
+        {
+            string firstZeros = "";
+            int zeroCount = 20 - referenceNumber.Length;
+            for (int i = 0; i < zeroCount; i++)
+            {
+                firstZeros += "0";
+            }
+            return firstZeros;
+
+        } // end ReferenceNumberFirstZeros
+
+
+        private string GetInternationalreferenceNumber()
+        {
+            string returnValue = "";
+            string originalReferenceNumber = txbReferenceNumber.Text;
+
+            bool referenceNumberIsEmpty = CheckEmptyReferenceNumber(originalReferenceNumber);
+            if (referenceNumberIsEmpty) return returnValue;
+
+            InternationalReferenceNumberHandler referenceNumberTest = new InternationalReferenceNumberHandler();
+            string plainReferenceNumber = referenceNumberTest.MakePlainReferenceNumber(originalReferenceNumber, 2);
+
+            bool correctReferenceNumber = referenceNumberTest.CheckReferenceNumber(plainReferenceNumber);
+            if (correctReferenceNumber)
+            {
+                returnValue = plainReferenceNumber.Substring(2);
+                return returnValue;
+            }
+
+            else
+            {
+                InternationalReferenceNumberHandler newReferenceNumberHandler = new InternationalReferenceNumberHandler();
+                string newReferenceNumber = newReferenceNumberHandler.CalculateInternationalReferenceNumber(plainReferenceNumber);
+
+                bool correctNewReferenceNumber = referenceNumberTest.CheckReferenceNumber(newReferenceNumber);
+                if (correctNewReferenceNumber)
+                {
+                    DialogResult wrongReferenceDialog = MessageBox.Show(
+                        "Haluatko laskea viitenumeron tarkisteen uudelleen?", "Virheellinen viitenumero",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+                    if (wrongReferenceDialog == DialogResult.No)
+                    {
+                        return returnValue;
+                    }
+                    else
+                    {
+                        returnValue = newReferenceNumber.Substring(2);
+                        return returnValue;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Viitenumero on virheellinen", "Virheellinen tieto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return returnValue;
+                }
+            }
+
+        } // end GetInternationalreferenceNumber
 
 
         private void DrawBarcode()
@@ -394,12 +471,12 @@ namespace barcode_creator
         private void btnMakeVirtualBarcode_Click(object sender, EventArgs e)
         {
             //  DrawBarcode();
-            //  MakeVirtualBarcode();
+              MakeVirtualBarcode();
             //  GetPaymentEuros();
             // string rr=    GetPaymentDate();
-            //  string dd = GetAccountIbanNumber();
-            //  string rr = GetReferenceNumber();
-
+            //   string dd = GetAccountIbanNumber();
+            // string rr = GetReferenceNumber();
+           // string ff = GetInternationalreferenceNumber();
         }
 
 

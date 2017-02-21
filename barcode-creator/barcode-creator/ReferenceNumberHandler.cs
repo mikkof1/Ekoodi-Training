@@ -8,37 +8,12 @@ namespace barcode_creator
 {
     class ReferenceNumberHandler
     {
-        public string MakePlainReferenceNumber(string originalReferenceNumber)
-        {
-            string returnValue = "";
-            string plainReferenceNumber = "";
-            foreach (char numberChar in originalReferenceNumber)
-            {
-                bool colifiedNumberChar = char.IsDigit(numberChar);
-                if (colifiedNumberChar)
-                {
-                    plainReferenceNumber += numberChar;
-                }
-                else
-                {
-                    bool wrongCharError = numberChar != ' ';
-                    if (wrongCharError)
-                    {
-                        return returnValue;
-                    }
-                }
-            } // foreach
-            returnValue = plainReferenceNumber;
-            return returnValue;
-
-        } // end MakePlainReferenceNumber
-
-
         public string MakeFinnishReferenceNumber(string referenceNumberFirstPart, bool seperatedReferenceNumber = false)
         {
-            string returnText = "";
+            string returnText = "Error";
 
             string plainReferenceNumber = MakePlainReferenceNumber(referenceNumberFirstPart);
+
 
             bool wrongSizeReferenceNumber = plainReferenceNumber.Length < 3 || plainReferenceNumber.Length > 19;
             if (wrongSizeReferenceNumber)
@@ -46,34 +21,7 @@ namespace barcode_creator
                 return returnText;
             }
 
-            decimal referenceSummarium = 0;
-            int weightCounter = 1;
-            for (int plainNumberCharIndex = plainReferenceNumber.Length;
-                plainNumberCharIndex > 0;
-                plainNumberCharIndex--)
-            {
-                char numberChar = plainReferenceNumber[plainNumberCharIndex - 1];
-
-                bool firstWeightFactor = weightCounter % 3 == 1;
-                if (firstWeightFactor)
-                {
-                    referenceSummarium += decimal.Parse(numberChar.ToString()) * 7;
-                }
-
-                bool secondWeightFactor = weightCounter % 3 == 2;
-                if (secondWeightFactor)
-                {
-                    referenceSummarium += decimal.Parse(numberChar.ToString()) * 3;
-                }
-
-                bool thirdWeightFactor = weightCounter % 3 == 0;
-                if (thirdWeightFactor)
-                {
-                    referenceSummarium += decimal.Parse(numberChar.ToString()) * 1;
-                }
-
-                weightCounter++;
-            }
+            decimal referenceSummarium = CalculateReferenceSummarium(plainReferenceNumber);
 
             decimal referenceChekerNumber = 10 - (referenceSummarium % 10);
             string readyReferenceNumber = plainReferenceNumber + referenceChekerNumber;
@@ -107,9 +55,87 @@ namespace barcode_creator
         } // end of MakeFinnishReferenceNumber
 
 
+        public string MakePlainReferenceNumber(string originalReferenceNumber)
+        {
+            string plainReferenceNumber = "";
+            foreach (char numberChar in originalReferenceNumber)
+            {
+                bool colifiedNumberChar = char.IsDigit(numberChar);
+                if (colifiedNumberChar)
+                {
+                    plainReferenceNumber += numberChar;
+                }
+                else
+                {
+                    bool wrongCharError = numberChar != ' ';
+                    if (wrongCharError)
+                    {
+                        return "";
+                    }
+                }
+            }
+            return plainReferenceNumber;
+
+        }// end MakePlainReferenceNumber
+
+
+        private decimal CalculateReferenceSummarium(string plainReferenceNumber)
+        {
+            decimal referenceSummarium = 0;
+            int weightCounter = 1;
+            for (int plainNumberCharIndex = plainReferenceNumber.Length; plainNumberCharIndex > 0; plainNumberCharIndex--)
+            {
+                char numberChar = plainReferenceNumber[plainNumberCharIndex - 1];
+
+                bool firstWeightFactor = weightCounter % 3 == 1;
+                if (firstWeightFactor)
+                {
+                    referenceSummarium += decimal.Parse(numberChar.ToString()) * 7;
+                }
+
+                bool secondWeightFactor = weightCounter % 3 == 2;
+                if (secondWeightFactor)
+                {
+                    referenceSummarium += decimal.Parse(numberChar.ToString()) * 3;
+                }
+
+                bool thirdWeightFactor = weightCounter % 3 == 0;
+                if (thirdWeightFactor)
+                {
+                    referenceSummarium += decimal.Parse(numberChar.ToString()) * 1;
+                }
+
+                weightCounter++;
+            }
+
+            return referenceSummarium;
+        }
+
+
         public bool CheckFinnishReferenceNumber(string referenceNumber)
         {
-            string plainReferenceNumber = MakePlainReferenceNumber(referenceNumber);
+            bool referenceNumberIsEmpty = referenceNumber.Length <= 0;
+            if (referenceNumberIsEmpty)
+            {
+                return false;
+            }
+
+            string plainReferenceNumber = "";
+            foreach (char referenceNumberChar in referenceNumber)
+            {
+                if (char.IsDigit(referenceNumberChar))
+                {
+                    plainReferenceNumber += referenceNumberChar;
+                }
+                else
+                {
+                    bool wrongCharError = referenceNumberChar != ' ';
+                    if (wrongCharError)
+                    {
+                        return false;
+                    }
+                }
+            }
 
             string testFirstPart = plainReferenceNumber.Substring(0, plainReferenceNumber.Length - 1);
             string testReferenceNumber = MakeFinnishReferenceNumber(testFirstPart);
