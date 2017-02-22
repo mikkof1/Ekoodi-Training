@@ -16,10 +16,12 @@ namespace barcode_creator
 {
     public partial class FormMain : Form
     {
+        private string fontFilePath = "D:\\Resources\\code128.ttf";
+
         public FormMain()
         {
             InitializeComponent();
-
+   
         }
 
 
@@ -45,20 +47,24 @@ namespace barcode_creator
             {
                 versionNumber = "5";
 
-                string referenceNumber = GetReferenceNumber();
-                endMakeingBarcode = referenceNumber.Length != 20;
-                if (endMakeingBarcode) return;
+                string referenceNumber = GetInternationalreferenceNumber();
+                endMakeingBarcode = referenceNumber.Length != 23;
+                if (endMakeingBarcode)
+                {
+                    return;
+                }
 
-                
-
-            } 
+                virtualBarCode = versionNumber + accountIbanNumber + paymentEuros + referenceNumber + paymentDate;
+            }
 
             else
             {
-
                 string referenceNumber = GetReferenceNumber();
                 endMakeingBarcode = referenceNumber.Length != 20;
-                if (endMakeingBarcode) return;
+                if (endMakeingBarcode)
+                {
+                    return;
+                }
 
                 string backUpSpace = "000";
 
@@ -69,26 +75,11 @@ namespace barcode_creator
 
             txbVirtualBarcode.Text = virtualBarCode;
 
-            string firstEmptySpace = "";
-            string firstMark = "";
-            string examine2 = "";
-            string endMark = "";
-            string emptySpace2 = "";
-
-
-
-
-
-
-
-
-
-
+            MakeDrawedBarCode(virtualBarCode);
 
         } //end MakeVirtualBarcode
 
-
-
+        
         private string GetPaymentDate()
         {
             bool earlyPaymentDay = dtpPaymentDate.Value.Date <= DateTime.Today;
@@ -311,7 +302,7 @@ namespace barcode_creator
             string originalReferenceNumber = txbReferenceNumber.Text;
 
             bool referenceNumberIsEmpty = CheckEmptyReferenceNumber(originalReferenceNumber);
-            if (referenceNumberIsEmpty) return returnValue;
+            if (referenceNumberIsEmpty) { return returnValue; }
 
             ReferenceNumberHandler referenceNumberTest = new ReferenceNumberHandler();
             string plainReferenceNumber = referenceNumberTest.MakePlainReferenceNumber(originalReferenceNumber);
@@ -397,7 +388,7 @@ namespace barcode_creator
             bool correctReferenceNumber = referenceNumberTest.CheckReferenceNumber(plainReferenceNumber);
             if (correctReferenceNumber)
             {
-                returnValue = plainReferenceNumber.Substring(2);
+                returnValue = InternationalReferenceNumberWhitZeros(plainReferenceNumber);
                 return returnValue;
             }
 
@@ -419,7 +410,7 @@ namespace barcode_creator
                     }
                     else
                     {
-                        returnValue = newReferenceNumber.Substring(2);
+                        returnValue = InternationalReferenceNumberWhitZeros(newReferenceNumber);
                         return returnValue;
                     }
                 }
@@ -433,17 +424,61 @@ namespace barcode_creator
         } // end GetInternationalreferenceNumber
 
 
-        private void DrawBarcode()
+        private string InternationalReferenceNumberWhitZeros(string referenceNumber)
+        {
+            int zeroCount = 25 - referenceNumber.Length;
+            string zeroFillNumber = referenceNumber.Substring(2, 2);
+            for (int i = 0; i < zeroCount; i++)
+            {
+                zeroFillNumber += "0";
+            }
+            zeroFillNumber += referenceNumber.Substring(4);
+            return zeroFillNumber;
+
+        } // end InternationalReferenceNumberZeros
+
+
+        private void MakeDrawedBarCode(string virtualBarCode)
+        {
+            bool fontFileExists = File.Exists(fontFilePath);
+            if (fontFileExists)
+            {
+                int lastCheckMark = BarcodeLastCheckMark(virtualBarCode);
+                string barcodeString = "105" + virtualBarCode + lastCheckMark;
+                DrawBarcode(barcodeString);
+            }
+
+        }
+
+        private int BarcodeLastCheckMark(string virtualBarCode)
+        {
+            decimal checkCount = 105;
+            int pairIndex = 0;
+            for (int i = 0; i < 27; i++)
+            {
+                int charNumber = int.Parse(virtualBarCode.Substring(pairIndex, 2));
+
+                checkCount += charNumber * (i + 1);
+                pairIndex += 2;
+            }
+
+            decimal resultNumber = checkCount % 103;
+
+            return (int)resultNumber;
+
+        } // end BarcodeLastCheckMark
+
+
+        private void DrawBarcode(string virtualBarCodeWhitMarks)
         {
             PrivateFontCollection pfc = new PrivateFontCollection();
-            pfc.AddFontFile("D:\\Resources\\code128.ttf");
-            int tt = pfc.Families.Length;
+            pfc.AddFontFile(fontFilePath);
 
-            string codeString = txbVirtualBarcode.Text;
+            string codeString = virtualBarCodeWhitMarks;
             Bitmap barBitmap = new Bitmap(codeString.Length * 40, 80);
             using (Graphics graphis = Graphics.FromImage(barBitmap))
             {
-                Font barFont = new Font(pfc.Families[0], 40); //new System.Drawing.Font("Arial", 20);
+                Font barFont = new Font(pfc.Families[0], 40); 
                 PointF barPoint = new PointF(2f, 10f);
                 SolidBrush blackBruch = new SolidBrush(Color.Black);
                 SolidBrush whiteBruch = new SolidBrush(Color.White);
@@ -457,7 +492,6 @@ namespace barcode_creator
                 picBarcodeDraw.Image = barBitmap;
                 picBarcodeDraw.Height = barBitmap.Height;
                 picBarcodeDraw.Width = barBitmap.Width;
-
             }
 
         }
@@ -470,16 +504,9 @@ namespace barcode_creator
 
         private void btnMakeVirtualBarcode_Click(object sender, EventArgs e)
         {
-            //  DrawBarcode();
-              MakeVirtualBarcode();
-            //  GetPaymentEuros();
-            // string rr=    GetPaymentDate();
-            //   string dd = GetAccountIbanNumber();
-            // string rr = GetReferenceNumber();
-           // string ff = GetInternationalreferenceNumber();
+            MakeVirtualBarcode();
         }
-
-
+        
 
         private void txbMoneySummarium_KeyPress(object sender, KeyPressEventArgs e)
         {
