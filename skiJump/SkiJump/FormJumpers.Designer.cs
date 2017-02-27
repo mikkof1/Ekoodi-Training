@@ -43,11 +43,10 @@
             // 
             // lbxJumpers
             // 
-            this.lbxJumpers.FormattingEnabled = true;
             this.lbxJumpers.Location = new System.Drawing.Point(34, 157);
             this.lbxJumpers.Name = "lbxJumpers";
             this.lbxJumpers.Size = new System.Drawing.Size(146, 290);
-            this.lbxJumpers.TabIndex = 0;
+            this.lbxJumpers.TabIndex = 6;
             // 
             // label1
             // 
@@ -79,7 +78,7 @@
             this.btnAddJumper.Location = new System.Drawing.Point(233, 255);
             this.btnAddJumper.Name = "btnAddJumper";
             this.btnAddJumper.Size = new System.Drawing.Size(75, 23);
-            this.btnAddJumper.TabIndex = 4;
+            this.btnAddJumper.TabIndex = 3;
             this.btnAddJumper.Text = "Lisää";
             this.btnAddJumper.UseVisualStyleBackColor = true;
             this.btnAddJumper.Click += new System.EventHandler(this.btnAddJumper_Click);
@@ -89,9 +88,10 @@
             this.btnRemoveJumper.Location = new System.Drawing.Point(233, 353);
             this.btnRemoveJumper.Name = "btnRemoveJumper";
             this.btnRemoveJumper.Size = new System.Drawing.Size(75, 23);
-            this.btnRemoveJumper.TabIndex = 4;
+            this.btnRemoveJumper.TabIndex = 5;
             this.btnRemoveJumper.Text = "Poista";
             this.btnRemoveJumper.UseVisualStyleBackColor = true;
+            this.btnRemoveJumper.Click += new System.EventHandler(this.btnRemoveJumper_Click);
             // 
             // label3
             // 
@@ -107,7 +107,8 @@
             this.txbCup.Location = new System.Drawing.Point(40, 41);
             this.txbCup.Name = "txbCup";
             this.txbCup.Size = new System.Drawing.Size(293, 20);
-            this.txbCup.TabIndex = 6;
+            this.txbCup.TabIndex = 1;
+            this.txbCup.Text = "World Cup";
             // 
             // btnClose
             // 
@@ -117,15 +118,17 @@
             this.btnClose.TabIndex = 7;
             this.btnClose.Text = "Paluu";
             this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnTecnical
             // 
-            this.btnTecnical.Location = new System.Drawing.Point(236, 451);
+            this.btnTecnical.Location = new System.Drawing.Point(339, 39);
             this.btnTecnical.Name = "btnTecnical";
             this.btnTecnical.Size = new System.Drawing.Size(75, 23);
             this.btnTecnical.TabIndex = 8;
             this.btnTecnical.Text = "Tekniset";
             this.btnTecnical.UseVisualStyleBackColor = true;
+            this.btnTecnical.Click += new System.EventHandler(this.btnTecnical_Click);
             // 
             // btnModifyJumper
             // 
@@ -141,7 +144,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(468, 505);
+            this.ClientSize = new System.Drawing.Size(480, 505);
             this.Controls.Add(this.btnTecnical);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.txbCup);
@@ -154,7 +157,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lbxJumpers);
             this.Name = "FormJumpers";
-            this.Text = "FormJumpers";
+            this.Text = "Osallistujat";
             this.ResumeLayout(false);
             this.PerformLayout();
 

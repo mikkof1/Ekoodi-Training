@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label3 = new System.Windows.Forms.Label();
             this.txbStyle1 = new System.Windows.Forms.TextBox();
             this.txbStyle2 = new System.Windows.Forms.TextBox();
@@ -52,10 +53,17 @@
             this.lblJumper = new System.Windows.Forms.Label();
             this.btnCalculatePoints = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.lbxRank = new System.Windows.Forms.ListBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblCupName = new System.Windows.Forms.Label();
             this.btnJumpers = new System.Windows.Forms.Button();
             this.btnTecnical = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txbJumpLenght = new System.Windows.Forms.TextBox();
+            this.lblTecnicalDetalies = new System.Windows.Forms.Label();
+            this.dgvJumpResults = new System.Windows.Forms.DataGridView();
+            this.colPlace = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvJumpResults)).BeginInit();
             this.SuspendLayout();
             // 
             // label3
@@ -72,14 +80,18 @@
             this.txbStyle1.Location = new System.Drawing.Point(62, 192);
             this.txbStyle1.Name = "txbStyle1";
             this.txbStyle1.Size = new System.Drawing.Size(100, 20);
-            this.txbStyle1.TabIndex = 1;
+            this.txbStyle1.TabIndex = 7;
+            this.txbStyle1.Tag = "style";
+            this.txbStyle1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbStyle1_KeyPress);
             // 
             // txbStyle2
             // 
             this.txbStyle2.Location = new System.Drawing.Point(62, 238);
             this.txbStyle2.Name = "txbStyle2";
             this.txbStyle2.Size = new System.Drawing.Size(100, 20);
-            this.txbStyle2.TabIndex = 1;
+            this.txbStyle2.TabIndex = 8;
+            this.txbStyle2.Tag = "style";
+            this.txbStyle2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbStyle1_KeyPress);
             // 
             // label4
             // 
@@ -95,7 +107,9 @@
             this.txbStyle3.Location = new System.Drawing.Point(62, 285);
             this.txbStyle3.Name = "txbStyle3";
             this.txbStyle3.Size = new System.Drawing.Size(100, 20);
-            this.txbStyle3.TabIndex = 1;
+            this.txbStyle3.TabIndex = 9;
+            this.txbStyle3.Tag = "style";
+            this.txbStyle3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbStyle1_KeyPress);
             // 
             // label5
             // 
@@ -111,7 +125,9 @@
             this.txbStyle4.Location = new System.Drawing.Point(62, 337);
             this.txbStyle4.Name = "txbStyle4";
             this.txbStyle4.Size = new System.Drawing.Size(100, 20);
-            this.txbStyle4.TabIndex = 1;
+            this.txbStyle4.TabIndex = 10;
+            this.txbStyle4.Tag = "style";
+            this.txbStyle4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbStyle1_KeyPress);
             // 
             // label6
             // 
@@ -127,7 +143,9 @@
             this.txbStyle5.Location = new System.Drawing.Point(62, 385);
             this.txbStyle5.Name = "txbStyle5";
             this.txbStyle5.Size = new System.Drawing.Size(100, 20);
-            this.txbStyle5.TabIndex = 1;
+            this.txbStyle5.TabIndex = 11;
+            this.txbStyle5.Tag = "style";
+            this.txbStyle5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbStyle1_KeyPress);
             // 
             // label7
             // 
@@ -144,34 +162,49 @@
             this.txbWind1.Name = "txbWind1";
             this.txbWind1.Size = new System.Drawing.Size(100, 20);
             this.txbWind1.TabIndex = 1;
+            this.txbWind1.Tag = "wind";
+            this.txbWind1.Text = "2";
+            this.txbWind1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbWind1_KeyPress);
             // 
             // txbWind2
             // 
             this.txbWind2.Location = new System.Drawing.Point(486, 63);
             this.txbWind2.Name = "txbWind2";
             this.txbWind2.Size = new System.Drawing.Size(100, 20);
-            this.txbWind2.TabIndex = 1;
+            this.txbWind2.TabIndex = 2;
+            this.txbWind2.Tag = "wind";
+            this.txbWind2.Text = "2,2";
+            this.txbWind2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbWind1_KeyPress);
             // 
             // txbWind3
             // 
             this.txbWind3.Location = new System.Drawing.Point(601, 63);
             this.txbWind3.Name = "txbWind3";
             this.txbWind3.Size = new System.Drawing.Size(100, 20);
-            this.txbWind3.TabIndex = 1;
+            this.txbWind3.TabIndex = 3;
+            this.txbWind3.Tag = "wind";
+            this.txbWind3.Text = "1,5";
+            this.txbWind3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbWind1_KeyPress);
             // 
             // txbWind4
             // 
             this.txbWind4.Location = new System.Drawing.Point(422, 112);
             this.txbWind4.Name = "txbWind4";
             this.txbWind4.Size = new System.Drawing.Size(100, 20);
-            this.txbWind4.TabIndex = 1;
+            this.txbWind4.TabIndex = 4;
+            this.txbWind4.Tag = "wind";
+            this.txbWind4.Text = "-0,8";
+            this.txbWind4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbWind1_KeyPress);
             // 
             // txbWind5
             // 
             this.txbWind5.Location = new System.Drawing.Point(554, 112);
             this.txbWind5.Name = "txbWind5";
             this.txbWind5.Size = new System.Drawing.Size(100, 20);
-            this.txbWind5.TabIndex = 1;
+            this.txbWind5.TabIndex = 5;
+            this.txbWind5.Tag = "wind";
+            this.txbWind5.Text = "2,8";
+            this.txbWind5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbWind1_KeyPress);
             // 
             // label8
             // 
@@ -241,7 +274,7 @@
             this.btnCalculatePoints.Location = new System.Drawing.Point(65, 435);
             this.btnCalculatePoints.Name = "btnCalculatePoints";
             this.btnCalculatePoints.Size = new System.Drawing.Size(138, 56);
-            this.btnCalculatePoints.TabIndex = 6;
+            this.btnCalculatePoints.TabIndex = 12;
             this.btnCalculatePoints.Text = "Laske pisteet";
             this.btnCalculatePoints.UseVisualStyleBackColor = true;
             this.btnCalculatePoints.Click += new System.EventHandler(this.btnCalculatePoints_Click);
@@ -255,51 +288,114 @@
             this.label1.TabIndex = 7;
             this.label1.Text = "Pisteet:";
             // 
-            // lbxRank
+            // lblCupName
             // 
-            this.lbxRank.FormattingEnabled = true;
-            this.lbxRank.HorizontalScrollbar = true;
-            this.lbxRank.Location = new System.Drawing.Point(422, 222);
-            this.lbxRank.Name = "lbxRank";
-            this.lbxRank.Size = new System.Drawing.Size(268, 329);
-            this.lbxRank.TabIndex = 8;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(422, 203);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(40, 13);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Sijoitus";
+            this.lblCupName.AutoSize = true;
+            this.lblCupName.Location = new System.Drawing.Point(392, 222);
+            this.lblCupName.Name = "lblCupName";
+            this.lblCupName.Size = new System.Drawing.Size(40, 13);
+            this.lblCupName.TabIndex = 9;
+            this.lblCupName.Text = "Sijoitus";
             // 
             // btnJumpers
             // 
             this.btnJumpers.Location = new System.Drawing.Point(585, 192);
             this.btnJumpers.Name = "btnJumpers";
             this.btnJumpers.Size = new System.Drawing.Size(105, 23);
-            this.btnJumpers.TabIndex = 10;
+            this.btnJumpers.TabIndex = 14;
             this.btnJumpers.Text = "Hyppääjät";
             this.btnJumpers.UseVisualStyleBackColor = true;
+            this.btnJumpers.Click += new System.EventHandler(this.btnJumpers_Click);
             // 
             // btnTecnical
             // 
-            this.btnTecnical.Location = new System.Drawing.Point(490, 12);
+            this.btnTecnical.Location = new System.Drawing.Point(235, 192);
             this.btnTecnical.Name = "btnTecnical";
             this.btnTecnical.Size = new System.Drawing.Size(100, 23);
-            this.btnTecnical.TabIndex = 11;
-            this.btnTecnical.Text = "Tekniset";
+            this.btnTecnical.TabIndex = 13;
+            this.btnTecnical.Text = "Tornin tiedot";
             this.btnTecnical.UseVisualStyleBackColor = true;
+            this.btnTecnical.Click += new System.EventHandler(this.btnTecnical_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(232, 368);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(71, 13);
+            this.label13.TabIndex = 12;
+            this.label13.Text = "Hypyn pituus:";
+            // 
+            // txbJumpLenght
+            // 
+            this.txbJumpLenght.Location = new System.Drawing.Point(235, 385);
+            this.txbJumpLenght.Name = "txbJumpLenght";
+            this.txbJumpLenght.Size = new System.Drawing.Size(100, 20);
+            this.txbJumpLenght.TabIndex = 6;
+            this.txbJumpLenght.Tag = "jump";
+            this.txbJumpLenght.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbStyle1_KeyPress);
+            // 
+            // lblTecnicalDetalies
+            // 
+            this.lblTecnicalDetalies.AutoSize = true;
+            this.lblTecnicalDetalies.Location = new System.Drawing.Point(235, 222);
+            this.lblTecnicalDetalies.Name = "lblTecnicalDetalies";
+            this.lblTecnicalDetalies.Size = new System.Drawing.Size(81, 39);
+            this.lblTecnicalDetalies.TabIndex = 14;
+            this.lblTecnicalDetalies.Text = "K-piste:\r\nVaikeuskerroin:\r\nLavan korkeus:";
+            // 
+            // dgvJumpResults
+            // 
+            this.dgvJumpResults.AllowUserToAddRows = false;
+            this.dgvJumpResults.AllowUserToDeleteRows = false;
+            this.dgvJumpResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvJumpResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colPlace,
+            this.colName,
+            this.colPoints});
+            this.dgvJumpResults.Location = new System.Drawing.Point(395, 238);
+            this.dgvJumpResults.Name = "dgvJumpResults";
+            this.dgvJumpResults.ReadOnly = true;
+            this.dgvJumpResults.RowHeadersVisible = false;
+            this.dgvJumpResults.Size = new System.Drawing.Size(399, 380);
+            this.dgvJumpResults.TabIndex = 15;
+            // 
+            // colPlace
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colPlace.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colPlace.Frozen = true;
+            this.colPlace.HeaderText = "#";
+            this.colPlace.Name = "colPlace";
+            this.colPlace.ReadOnly = true;
+            this.colPlace.Width = 50;
+            // 
+            // colName
+            // 
+            this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colName.HeaderText = "Nimi";
+            this.colName.Name = "colName";
+            this.colName.ReadOnly = true;
+            // 
+            // colPoints
+            // 
+            this.colPoints.HeaderText = "Pisteet";
+            this.colPoints.Name = "colPoints";
+            this.colPoints.ReadOnly = true;
+            this.colPoints.Width = 80;
             // 
             // FormCounter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(828, 647);
+            this.Controls.Add(this.dgvJumpResults);
+            this.Controls.Add(this.lblTecnicalDetalies);
+            this.Controls.Add(this.txbJumpLenght);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.btnTecnical);
             this.Controls.Add(this.btnJumpers);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.lbxRank);
+            this.Controls.Add(this.lblCupName);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCalculatePoints);
             this.Controls.Add(this.lblJumper);
@@ -325,7 +421,9 @@
             this.Controls.Add(this.txbStyle2);
             this.Controls.Add(this.txbStyle1);
             this.Name = "FormCounter";
+            this.Tag = "wind";
             this.Text = "Mäkihyppy pistelaskuri";
+            ((System.ComponentModel.ISupportInitialize)(this.dgvJumpResults)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -356,10 +454,16 @@
         private System.Windows.Forms.Label lblJumper;
         private System.Windows.Forms.Button btnCalculatePoints;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ListBox lbxRank;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblCupName;
         private System.Windows.Forms.Button btnJumpers;
         private System.Windows.Forms.Button btnTecnical;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox txbJumpLenght;
+        private System.Windows.Forms.Label lblTecnicalDetalies;
+        private System.Windows.Forms.DataGridView dgvJumpResults;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPlace;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPoints;
     }
 }
 

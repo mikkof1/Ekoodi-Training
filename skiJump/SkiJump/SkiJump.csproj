@@ -66,6 +66,7 @@
       <DependentUpon>FormTecnical.cs</DependentUpon>
     </Compile>
     <Compile Include="Jumper.cs" />
+    <Compile Include="PointsHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormJumpers.resx">

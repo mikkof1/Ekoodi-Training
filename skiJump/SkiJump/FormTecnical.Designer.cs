@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txbDifficulity = new System.Windows.Forms.TextBox();
             this.txbKPoint = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txbStageHeight = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -42,23 +42,27 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(62, 108);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(76, 13);
+            this.label2.Size = new System.Drawing.Size(80, 13);
             this.label2.TabIndex = 6;
-            this.label2.Text = "Hyvityskerroin ";
+            this.label2.Text = "Vaikeuskerroin ";
             // 
-            // textBox1
+            // txbDifficulity
             // 
-            this.textBox1.Location = new System.Drawing.Point(62, 124);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 4;
+            this.txbDifficulity.Location = new System.Drawing.Point(62, 124);
+            this.txbDifficulity.Name = "txbDifficulity";
+            this.txbDifficulity.Size = new System.Drawing.Size(100, 20);
+            this.txbDifficulity.TabIndex = 3;
+            this.txbDifficulity.Text = "1,8";
+            this.txbDifficulity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbMultiplier_KeyPress);
             // 
             // txbKPoint
             // 
             this.txbKPoint.Location = new System.Drawing.Point(65, 72);
             this.txbKPoint.Name = "txbKPoint";
             this.txbKPoint.Size = new System.Drawing.Size(100, 20);
-            this.txbKPoint.TabIndex = 5;
+            this.txbKPoint.TabIndex = 1;
+            this.txbKPoint.Text = "100";
+            this.txbKPoint.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbKPoint_KeyPress);
             // 
             // label1
             // 
@@ -69,12 +73,14 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "K-piste (m)";
             // 
-            // textBox2
+            // txbStageHeight
             // 
-            this.textBox2.Location = new System.Drawing.Point(242, 72);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 4;
+            this.txbStageHeight.Location = new System.Drawing.Point(242, 72);
+            this.txbStageHeight.Name = "txbStageHeight";
+            this.txbStageHeight.Size = new System.Drawing.Size(100, 20);
+            this.txbStageHeight.TabIndex = 2;
+            this.txbStageHeight.Text = "0";
+            this.txbStageHeight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txbStage_KeyPress);
             // 
             // label3
             // 
@@ -87,27 +93,28 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(245, 172);
+            this.btnClose.Location = new System.Drawing.Point(232, 134);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(97, 23);
-            this.btnClose.TabIndex = 7;
-            this.btnClose.Text = "Takaisin";
+            this.btnClose.Size = new System.Drawing.Size(110, 46);
+            this.btnClose.TabIndex = 4;
+            this.btnClose.Text = "Tallenna ja poistu";
             this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // FormTecnical
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(426, 220);
+            this.ClientSize = new System.Drawing.Size(394, 220);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txbStageHeight);
+            this.Controls.Add(this.txbDifficulity);
             this.Controls.Add(this.txbKPoint);
             this.Controls.Add(this.label1);
             this.Name = "FormTecnical";
-            this.Text = "FormTecnical";
+            this.Text = "Kisan tiedot";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -116,10 +123,10 @@
         #endregion
 
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txbDifficulity;
         private System.Windows.Forms.TextBox txbKPoint;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txbStageHeight;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnClose;
     }

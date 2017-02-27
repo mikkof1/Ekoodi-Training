@@ -10,7 +10,7 @@ namespace SkiJump
     class JumperManager
     {
         private List<Jumper> jumperList = new List<Jumper>();
-        static long lastId;
+        static long lastId = 88;
 
         public JumperManager()
         {
@@ -37,7 +37,7 @@ namespace SkiJump
         public bool ModifyJumper(Jumper modyfiedJumper)
         {
             int jumperListIndex = FindJumper(modyfiedJumper.id);
-            if (jumperListIndex>0)
+            if (jumperListIndex >= 0)
             {
                 jumperList[jumperListIndex] = modyfiedJumper;
                 return true;
@@ -45,6 +45,17 @@ namespace SkiJump
             return false;
         }
 
+
+        public bool DeleteJumper(Jumper deleteJumper)
+        {
+            int jumperListIndex = FindJumper(deleteJumper.id);
+            if (jumperListIndex >= 0)
+            {
+                jumperList.RemoveAt(jumperListIndex);
+                return true;
+            }
+            return false;
+        }
 
         private int FindJumper(long id)
         {
@@ -54,7 +65,7 @@ namespace SkiJump
             {
                 if (jumper.id == id)
                 {
-                   returnIndex= jumperListIndex;
+                    returnIndex = jumperListIndex;
                     break;
                 }
                 jumperListIndex++;
