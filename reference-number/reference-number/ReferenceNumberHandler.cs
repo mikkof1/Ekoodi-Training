@@ -14,29 +14,10 @@ namespace reference_number
         {
             string returnText = "Not colified number";
 
-            string plainReferenceNumber = "";
-            foreach (char numberChar in referenceNumberFirstPart)
-            {
-                bool colifiedNumberChar = char.IsDigit(numberChar);
-                if (colifiedNumberChar)
-                {
-                    plainReferenceNumber += numberChar;
-                }
-                else
-                {
-                    bool wrongCharError = numberChar != ' ';
-                    if (wrongCharError)
-                    {
-                        return returnText;
-                    }
-                }
-            }
+            string plainReferenceNumber = MakePlainNumber(referenceNumberFirstPart);
 
-            bool wrongSizeReferenceNumber = plainReferenceNumber.Length < 3 || plainReferenceNumber.Length > 19;
-            if (wrongSizeReferenceNumber)
-            {
+            if (plainReferenceNumber.Length < 3)
                 return returnText;
-            }
 
             decimal referenceSummarium = CalculateReferenceSummarium(plainReferenceNumber);
 
@@ -72,6 +53,38 @@ namespace reference_number
         } // end of MakeFinnishReferenceNumber
 
 
+        private string MakePlainNumber(string originalReferenseNumber)
+        {
+            string returnText = "";
+
+            string plainReferenceNumber = "";
+            foreach (char numberChar in originalReferenseNumber)
+            {
+                bool colifiedNumberChar = char.IsDigit(numberChar);
+                if (colifiedNumberChar)
+                {
+                    plainReferenceNumber += numberChar;
+                }
+                else
+                {
+                    bool wrongCharError = numberChar != ' ';
+                    if (wrongCharError)
+                    {
+                        return returnText;
+                    }
+                }
+            }
+
+            bool wrongSizeReferenceNumber = plainReferenceNumber.Length < 3 || plainReferenceNumber.Length > 19;
+            if (wrongSizeReferenceNumber)
+            {
+                return returnText;
+            }
+            return plainReferenceNumber;
+
+        } // end MakePlainNumber
+
+
         private decimal CalculateReferenceSummarium(string plainReferenceNumber)
         {
             decimal referenceSummarium = 0;
@@ -102,7 +115,7 @@ namespace reference_number
             }
 
             return referenceSummarium;
-        }
+        } // end CalculateReferenceSummarium
 
 
         public bool CheckFinnishReferenceNumber(string referenceNumber)
@@ -132,6 +145,42 @@ namespace reference_number
             return colifiedReferenceNumber;
 
         } // end of CheckFinnishReferenceNumber
+
+
+        public void MakeMultibleReferenceNumber()
+        {
+            Console.WriteLine("Give referencenumber: ");
+            string originalReferenceNumber = Console.ReadLine();
+            string plainReferenceNumber = MakePlainNumber(originalReferenceNumber);
+            if (plainReferenceNumber.Length < 3)
+            {
+                Console.WriteLine("Not colified number ");
+                return;
+            }
+
+            Console.WriteLine("Give count: ");
+            string countText = Console.ReadLine();
+
+            int count = 0;
+
+            try
+            {
+                count = int.Parse(countText);
+            }
+            catch
+            {
+                Console.WriteLine("Not colified number");
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                int numberIndex = i + 1;
+                string multibleNumber = plainReferenceNumber + numberIndex;
+                string referenceNumber = MakeFinnishReferenceNumber(multibleNumber, true);
+                Console.WriteLine(numberIndex+". "+referenceNumber);
+            }
+
+        }
 
 
     }

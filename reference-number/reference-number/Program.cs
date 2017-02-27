@@ -13,8 +13,13 @@ namespace reference_number
 
             ReferenceNumberHandler test = new ReferenceNumberHandler();
 
-            Console.WriteLine(test.MakeFinnishReferenceNumber(" 12 345 6 ", true));//1
-            Console.WriteLine(test.MakeFinnishReferenceNumber(" 3075 ", true));//3
+            test.MakeMultibleReferenceNumber();
+
+
+
+
+            Console.WriteLine(test.MakeFinnishReferenceNumber(" 12 345 6 ", true)); //1
+            Console.WriteLine(test.MakeFinnishReferenceNumber(" 3075 ", true)); //3
             Console.WriteLine(test.MakeFinnishReferenceNumber(" 9907 124020 300325 ")); //1
             Console.WriteLine(test.MakeFinnishReferenceNumber(" 9907 124020 300325 ", true)); //1
 
@@ -25,5 +30,11 @@ namespace reference_number
             Console.ReadKey();
 
         }
+
+
+
     }
+
+
 }
+
