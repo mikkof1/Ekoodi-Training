@@ -280,7 +280,7 @@ namespace SkiJump
 
         private void btnJumpers_Click(object sender, EventArgs e)
         {
-            bool changeJumpers = jumpRound < 2 && jumpOrderList.Count == maxJumpers;
+            bool changeJumpers = jumpOrderList.Count == 0 || jumpRound == 0; ;
             if (changeJumpers)
             {
                 OpenJumpersForm();

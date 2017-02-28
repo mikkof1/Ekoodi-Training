@@ -124,9 +124,9 @@
             // 
             this.btnTecnical.Location = new System.Drawing.Point(339, 39);
             this.btnTecnical.Name = "btnTecnical";
-            this.btnTecnical.Size = new System.Drawing.Size(75, 23);
+            this.btnTecnical.Size = new System.Drawing.Size(84, 23);
             this.btnTecnical.TabIndex = 8;
-            this.btnTecnical.Text = "Tekniset";
+            this.btnTecnical.Text = "Tornin tiedot";
             this.btnTecnical.UseVisualStyleBackColor = true;
             this.btnTecnical.Click += new System.EventHandler(this.btnTecnical_Click);
             // 
