@@ -76,9 +76,8 @@ namespace BankObjects
 
         private BankAccount GetClientBankAccount(string accountNumber)
         {
-            return (from account in _bankAccountsList
-                    where account.AccountNumber == accountNumber
-                    select account).FirstOrDefault();
+            BankAccount returnAccount = _bankAccountsList.First(account => account.AccountNumber == accountNumber);
+            return returnAccount;
         }
 
     }
