@@ -18,6 +18,14 @@ namespace MvcMovie
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            //// /localhost:XXX/HelloWorld/Welcome/Scott/3
+            //routes.MapRoute(
+            //    name: "Herne",
+            //    url: "{controller}/{action}/{name}/{id}"
+
+            //);
+
         }
     }
 }
