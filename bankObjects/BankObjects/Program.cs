@@ -9,7 +9,7 @@ namespace BankObjects
 {
     class Program
     {
-        
+
         static void Main(string[] args)
         {
             Bank bank = new Bank("Pankki");
@@ -21,16 +21,29 @@ namespace BankObjects
                 new Client("Aku", "Ankka")
             };
 
-            MakeTestAccountNumbers(clientList,bank);
+            MakeTestAccountNumbers(clientList, bank);
 
-            MakeTestActivities(clientList, bank);
-
-            foreach (Client client in clientList)
+            try
             {
-                double money = bank.GetClientMoney(client.AccountNumber);
-                PrintActivitys(client, bank.GetClientActivitys(client.AccountNumber), money);
+                MakeTestActivities(clientList, bank);
+
+                foreach (Client client in clientList)
+                {
+                    double allCustomersMoney = bank.GetClientMoney(client.AccountNumber);
+                    PrintActivitys(client, bank.GetClientActivitys(client.AccountNumber), allCustomersMoney);
+                }
+
+                foreach (Client client in clientList)
+                {
+                    double allCustomersMoney = bank.GetClientMoney(client.AccountNumber);
+                    PrintActivitys(client, bank.GetClientActivitys(client.AccountNumber, new DateTime(2000, 1, 1), new DateTime(2015, 1, 1)), allCustomersMoney);
+                }
             }
-            
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: \r\n");
+                Console.WriteLine(ex.Message);
+            }
             Console.ReadKey();
 
         }
@@ -47,7 +60,7 @@ namespace BankObjects
         static void MakeTestActivities(List<Client> clientList, Bank bank)
         {
             Random rnd = new Random();
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 60; i++)
             {
                 int year = rnd.Next(1900, 2018);
                 int month = rnd.Next(1, 12);
@@ -60,16 +73,19 @@ namespace BankObjects
 
         }
 
-        static void PrintActivitys(Client client, List<AccountActivity> activityList, double money)
+        static void PrintActivitys(Client client, List<AccountActivity> activityList, double allCustomersMoney)
         {
-            Console.WriteLine(client+ "\r\n");
-            foreach (AccountActivity activity in activityList)
+            Console.WriteLine(client + "\r\n");
+            List<AccountActivity> printList = activityList.OrderBy(a => a.TimeStamp).ToList();
+            printList.ForEach(a =>
             {
-                Console.WriteLine(activity);
-            }
-            Console.WriteLine("\r\nMoney: " + money);
+                Console.WriteLine(a.ToString());
+            });
+
+            Console.WriteLine("\r\nMoney: " + allCustomersMoney);
             Console.WriteLine("------------------------------------\r\n\r\n");
         }
+
 
     }
 }

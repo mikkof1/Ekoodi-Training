@@ -41,23 +41,23 @@ namespace BankObjects
         public double GetClientMoney(string accountNumber)
         {
             BankAccount clientAccount = GetClientBankAccount(accountNumber);
-            return clientAccount?.Money ?? 0; // Wrong, can't return 0 money if account not found
+            return clientAccount.Money;
         }
 
         public List<AccountActivity> GetClientActivitys(string accountNumber)
         {
             BankAccount clientAccount = GetClientBankAccount(accountNumber);
-            List<AccountActivity> returnList = clientAccount?.AccountActivityList;
+            List<AccountActivity> returnList = clientAccount.AccountActivityList;
             return returnList;
         }
 
         public List<AccountActivity> GetClientActivitys(string accountNumber, DateTime startDate, DateTime endDate)
         {
             BankAccount clientAccount = GetClientBankAccount(accountNumber);
-            List<AccountActivity> returnList = clientAccount?.GetActivitysSelectedList(startDate, endDate);
+            List<AccountActivity> returnList = clientAccount.GetActivitysSelectedList(startDate, endDate);
             return returnList;
         }
-        
+
 
         // ***************************************************************************************************
         // private Functions 
@@ -77,7 +77,11 @@ namespace BankObjects
         private BankAccount GetClientBankAccount(string accountNumber)
         {
             BankAccount returnAccount = _bankAccountsList.First(account => account.AccountNumber == accountNumber);
-            return returnAccount;
+            if (returnAccount != null)
+            {
+                return returnAccount;
+            }
+            throw new Exception("Account number " + accountNumber + " not found");
         }
 
     }

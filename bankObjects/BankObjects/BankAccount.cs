@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BankObjects
 {
@@ -29,15 +27,10 @@ namespace BankObjects
             AccountActivity activity = new AccountActivity(money, date);
             _accountActivityList.Add(activity);
         }
-        
+
         public List<AccountActivity> GetActivitysSelectedList(DateTime startDate, DateTime endDate)
         {
-            List<AccountActivity> returnList = (from activity in _accountActivityList
-                                                where activity.TimeStamp >= startDate && activity.TimeStamp <= endDate
-                                                orderby activity.TimeStamp
-                                                select activity).ToList();
-            
-            return returnList;
+            return _accountActivityList.FindAll(a => a.TimeStamp >= startDate && a.TimeStamp <= endDate).ToList();
         }
 
 
