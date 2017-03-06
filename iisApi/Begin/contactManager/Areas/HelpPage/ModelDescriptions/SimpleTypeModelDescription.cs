@@ -1,0 +1,6 @@
+namespace contactManager.Areas.HelpPage.ModelDescriptions
+{
+    public class SimpleTypeModelDescription : ModelDescription
+    {
+    }
+}
