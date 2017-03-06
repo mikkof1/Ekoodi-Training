@@ -19,7 +19,8 @@ namespace WebApi.Controllers
         }
         
         //  [Route("joku/blaah/{id}")]
-        public IHttpActionResult GetIban(string  id)// if id => iban/123456789 else => iban?txt=123456789
+        [HttpPost] // was GetIban whitout [httppost]
+        public IHttpActionResult GenerateIban(string  id)// if id => iban/123456789 else => iban?txt=123456789
         {
              IbanNumberHandler iban = new IbanNumberHandler();
             var product =  iban.CalculateFinnishIbanNumber(id,true);
