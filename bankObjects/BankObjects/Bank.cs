@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BankObjects
 {
@@ -76,7 +74,7 @@ namespace BankObjects
 
         private BankAccount GetClientBankAccount(string accountNumber)
         {
-            BankAccount returnAccount = _bankAccountsList.First(account => account.AccountNumber == accountNumber);
+            BankAccount returnAccount = _bankAccountsList.FirstOrDefault(account => account.AccountNumber == accountNumber);
             if (returnAccount != null)
             {
                 return returnAccount;
