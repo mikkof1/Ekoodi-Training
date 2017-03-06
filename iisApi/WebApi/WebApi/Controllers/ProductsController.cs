@@ -9,7 +9,7 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-    public class ProductController : ApiController
+    public class ProductsController : ApiController
     {
         Product[] products = new Product[]
         {
@@ -18,12 +18,14 @@ namespace WebApi.Controllers
             new Product { Id = 3, Name = "Hammer", Category = "Hardware", Price = 16.99M }
         };
 
+        // If [Route(....)] is missing route is api/product
+      //  [Route("joku/blaah/")]
         public IEnumerable<Product> GetAllProducts()
         {
             return products;
         }
 
-        
+      //  [Route("joku/blaah/{id}")]
         public IHttpActionResult GetProduct(int id)
         {
             var product = products.FirstOrDefault((p) => p.Id == id);
