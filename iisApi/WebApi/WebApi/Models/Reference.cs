@@ -13,6 +13,7 @@ namespace WebApi.Models
         }
 
         public string ReferenceNumber { get; set; }
+        public bool CorrectNumber { get; set; }
 
     }
 }

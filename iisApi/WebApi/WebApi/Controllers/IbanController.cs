@@ -18,8 +18,7 @@ namespace WebApi.Controllers
         {
             if (id == null || id.IbanNumber == null)
             {
-                Iban ret = new Iban("heh heh ihan väärin");
-                return ret;
+                return null;
             }
             Iban iban = new Iban(id.IbanNumber);
             iban.CorrectNumber = _ibanService.CheckIbanNumber(iban.IbanNumber);
