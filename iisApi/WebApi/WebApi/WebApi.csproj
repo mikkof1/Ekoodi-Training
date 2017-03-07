@@ -121,6 +121,8 @@
     <Compile Include="Models\Iban.cs" />
     <Compile Include="Models\Reference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IbanService.cs" />
+    <Compile Include="Services\ReferenceService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

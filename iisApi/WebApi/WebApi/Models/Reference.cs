@@ -9,7 +9,7 @@ namespace WebApi.Models
     {
         public Reference(string referenceNumber)
         {
-            
+            ReferenceNumber = referenceNumber;
         }
 
         public string ReferenceNumber { get; set; }
