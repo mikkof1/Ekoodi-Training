@@ -115,11 +115,13 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\IbanController.cs" />
+    <Compile Include="Controllers\MultipleReferenceController.cs" />
     <Compile Include="Controllers\ReferenceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Iban.cs" />
+    <Compile Include="Models\MultipleReferenceNumber.cs" />
     <Compile Include="Models\Reference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IbanService.cs" />
