@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label3 = new System.Windows.Forms.Label();
             this.txbStyle1 = new System.Windows.Forms.TextBox();
             this.txbStyle2 = new System.Windows.Forms.TextBox();
@@ -52,7 +52,6 @@
             this.lblRound = new System.Windows.Forms.Label();
             this.lblJumper = new System.Windows.Forms.Label();
             this.btnCalculatePoints = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.lblCupName = new System.Windows.Forms.Label();
             this.btnJumpers = new System.Windows.Forms.Button();
             this.btnTecnical = new System.Windows.Forms.Button();
@@ -279,15 +278,6 @@
             this.btnCalculatePoints.UseVisualStyleBackColor = true;
             this.btnCalculatePoints.Click += new System.EventHandler(this.btnCalculatePoints_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(65, 511);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(42, 13);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Pisteet:";
-            // 
             // lblCupName
             // 
             this.lblCupName.AutoSize = true;
@@ -362,8 +352,8 @@
             // 
             // colPlace
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colPlace.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colPlace.DefaultCellStyle = dataGridViewCellStyle1;
             this.colPlace.Frozen = true;
             this.colPlace.HeaderText = "#";
             this.colPlace.Name = "colPlace";
@@ -396,7 +386,6 @@
             this.Controls.Add(this.btnTecnical);
             this.Controls.Add(this.btnJumpers);
             this.Controls.Add(this.lblCupName);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCalculatePoints);
             this.Controls.Add(this.lblJumper);
             this.Controls.Add(this.lblRound);
@@ -453,7 +442,6 @@
         private System.Windows.Forms.Label lblRound;
         private System.Windows.Forms.Label lblJumper;
         private System.Windows.Forms.Button btnCalculatePoints;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblCupName;
         private System.Windows.Forms.Button btnJumpers;
         private System.Windows.Forms.Button btnTecnical;

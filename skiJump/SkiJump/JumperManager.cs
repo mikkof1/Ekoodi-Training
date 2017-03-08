@@ -26,7 +26,7 @@ namespace SkiJump
 
         public long AddNewJumper(Jumper newJumper)
         {
-            newJumper.id = lastId;
+            newJumper.Id = lastId;
             jumperList.Add(newJumper);
             lastId++;
 
@@ -36,7 +36,7 @@ namespace SkiJump
 
         public bool ModifyJumper(Jumper modyfiedJumper)
         {
-            int jumperListIndex = FindJumper(modyfiedJumper.id);
+            int jumperListIndex = FindJumper(modyfiedJumper.Id);
             if (jumperListIndex >= 0)
             {
                 jumperList[jumperListIndex] = modyfiedJumper;
@@ -48,7 +48,7 @@ namespace SkiJump
 
         public bool DeleteJumper(Jumper deleteJumper)
         {
-            int jumperListIndex = FindJumper(deleteJumper.id);
+            int jumperListIndex = FindJumper(deleteJumper.Id);
             if (jumperListIndex >= 0)
             {
                 jumperList.RemoveAt(jumperListIndex);
@@ -63,7 +63,7 @@ namespace SkiJump
             int jumperListIndex = 0;
             foreach (Jumper jumper in jumperList)
             {
-                if (jumper.id == id)
+                if (jumper.Id == id)
                 {
                     returnIndex = jumperListIndex;
                     break;

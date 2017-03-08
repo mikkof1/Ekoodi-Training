@@ -30,7 +30,7 @@ namespace SkiJump
             _jumperList = _jumperManager.GetJumperList();
             lbxJumpers.DisplayMember = "name";
             lbxJumpers.ValueMember = "id";
-            refreshJumperListBox();
+            RefreshJumperListBox();
         }
 
         public string GetCupName()
@@ -48,11 +48,10 @@ namespace SkiJump
         {
             if (txbName.Text == string.Empty) return;
 
-            Jumper newJumper = new Jumper();
-            newJumper.name = txbName.Text;
+            Jumper newJumper = new Jumper { Name = txbName.Text };
 
             long idNumber = _jumperManager.AddNewJumper(newJumper);
-            refreshJumperListBox();
+            RefreshJumperListBox();
             txbName.Text = "";
 
         }
@@ -65,10 +64,10 @@ namespace SkiJump
             if (itemIsSelected)
             {
                 Jumper jumper = (Jumper)lbxJumpers.Items[listBoxIndex];
-                jumper.name = txbName.Text;
+                jumper.Name = txbName.Text;
                 _jumperManager.ModifyJumper(jumper);
 
-                refreshJumperListBox();
+                RefreshJumperListBox();
 
                 txbName.Text = "";
 
@@ -77,7 +76,7 @@ namespace SkiJump
         }
 
 
-        private void refreshJumperListBox()
+        private void RefreshJumperListBox()
         {
             lbxJumpers.Items.Clear();
             List<Jumper> jumperList = _jumperManager.GetJumperList();
@@ -98,16 +97,12 @@ namespace SkiJump
             if (itemIsSelected)
             {
                 Jumper jumper = (Jumper)lbxJumpers.Items[listBoxIndex];
-                DialogResult dr = MessageBox.Show("Haluatko varmasti poistaa hyppääjän \n\r" + jumper.name, "Hyppääjän poistaminen", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult dr = MessageBox.Show("Haluatko varmasti poistaa hyppääjän \n\r" + jumper.Name, @"Vahvista poisto", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 bool deleteJumper = dr == DialogResult.Yes;
                 if (deleteJumper)
                 {
                     bool jumperIsDeleted = _jumperManager.DeleteJumper(jumper);
-                    refreshJumperListBox();
-                }
-                else
-                {
-                    return;
+                    RefreshJumperListBox();
                 }
 
             }

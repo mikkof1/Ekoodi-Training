@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,52 +13,52 @@ namespace SkiJump
 {
     public partial class FormCounter : Form
     {
-        JumperManager jumperManager;
-        PointsHandler pointsHandler;
-        List<Jumper> jumpOrderList;
-        List<Jumper> resultList;
-        Jumper currentJumper;
-        int jumpRound;
-        int currentJumperIndex;
-        int maxJumpers;
+        JumperManager _jumperManager;
+        PointsHandler _pointsHandler;
+        List<Jumper> _jumpOrderList;
+        List<Jumper> _resultList;
+        Jumper _currentJumper;
+        int _jumpRound;
+        int _currentJumperIndex;
+        int _maxJumpers;
 
         public FormCounter()
         {
             InitializeComponent();
             StartSkiJumpProgram();
 
-         //   testJumpers();
+            //   testJumpers();
         }
 
 
-        private void testJumpers()
+        private void TestJumpers()
         {
 
-            Jumper jump1 = new Jumper {name = "Toni"};
-            jumperManager.AddNewJumper(jump1);
-            Jumper jump2 = new Jumper {name = "Matti"};
-            jumperManager.AddNewJumper(jump2);
-            Jumper jump3 = new Jumper {name = "Janne"};
-            jumperManager.AddNewJumper(jump3);
+            Jumper jump1 = new Jumper { Name = "Toni" };
+            _jumperManager.AddNewJumper(jump1);
+            Jumper jump2 = new Jumper { Name = "Matti" };
+            _jumperManager.AddNewJumper(jump2);
+            Jumper jump3 = new Jumper { Name = "Janne" };
+            _jumperManager.AddNewJumper(jump3);
 
         }
 
 
         private void StartSkiJumpProgram()
         {
-            jumperManager = new JumperManager();
-            pointsHandler = new PointsHandler();
-            jumpOrderList = new List<Jumper>();
-            jumpRound = 0;
+            _jumperManager = new JumperManager();
+            _pointsHandler = new PointsHandler();
+            _jumpOrderList = new List<Jumper>();
+            _jumpRound = 0;
             SetTowerDetalies();
 
-            btnCalculatePoints.Text = "Hae Hyppääjät";
+            btnCalculatePoints.Text = @"Hae Hyppääjät";
 
         }
 
         private void SetTowerDetalies()
         {
-            string towerDetalies = "K-piste: " + pointsHandler.GetKPoint() + "\r\nVaikeuskerroin:  " + pointsHandler.GetDifficulity() + "\r\nLavan korkeus: " + pointsHandler.GetStageHeight();
+            string towerDetalies = "K-piste: " + _pointsHandler.GetKPoint() + "\r\nVaikeuskerroin:  " + _pointsHandler.GetDifficulity() + "\r\nLavan korkeus: " + _pointsHandler.GetStageHeight();
 
             lblTecnicalDetalies.Text = towerDetalies;
 
@@ -65,20 +66,20 @@ namespace SkiJump
 
         private void SetjumpOrderList()
         {
-            jumpOrderList = new List<Jumper>();
-            jumpOrderList = jumperManager.GetJumperList();
-            bool noJumperOnList = jumpOrderList.Count < 1;
+            _jumpOrderList = new List<Jumper>();
+            _jumpOrderList = _jumperManager.GetJumperList();
+            bool noJumperOnList = _jumpOrderList.Count < 1;
             if (noJumperOnList)
                 return;
 
-            jumpRound = 1;
-            maxJumpers = jumpOrderList.Count;
-            currentJumperIndex = 1;
+            _jumpRound = 1;
+            _maxJumpers = _jumpOrderList.Count;
+            _currentJumperIndex = 1;
             dgvJumpResults.Rows.Clear();
 
-            btnCalculatePoints.Text = "Laske pisteet";
+            btnCalculatePoints.Text = @"Laske pisteet";
 
-            resultList = new List<Jumper>();
+            _resultList = new List<Jumper>();
             SetNextJumper();
         }
 
@@ -88,23 +89,23 @@ namespace SkiJump
             bool jumpLenghtMissing = txbJumpLenght.Text == string.Empty;
             if (jumpLenghtMissing)
             {
-                MessageBox.Show("Hypyn pituus puuttuu", "Puutteellinen tieto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Hypyn pituus puuttuu", @"Puutteellinen tieto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return true;
             }
 
-            foreach (TextBox textBox in this.Controls.OfType<TextBox>())
+            foreach (TextBox textBox in Controls.OfType<TextBox>())
             {
                 if (textBox.Tag != null)
                 {
                     if (textBox.Tag.ToString() == ("wind") && textBox.Text == string.Empty)
                     {
-                        MessageBox.Show("Tuuliarvo puuttuu", "Puutteellinen tieto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Tuulipisteet puuttuu", @"Puutteellinen tieto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return true;
                     }
 
                     if (textBox.Tag.ToString() == ("style") && textBox.Text == string.Empty)
                     {
-                        MessageBox.Show("Tyylipisteet puuttuvat", "Puutteellinen tieto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(@"Tyylipisteet puuttuu", @"Puutteellinen tieto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return true;
                     }
                 }
@@ -117,8 +118,8 @@ namespace SkiJump
         {
             float jumpPoints = 0;
 
-            bool startSkiJumpCompetition = jumpRound == 0;
-            if (startSkiJumpCompetition) jumpRound = 1;
+            bool startSkiJumpCompetition = _jumpRound == 0;
+            if (startSkiJumpCompetition) _jumpRound = 1;
 
             try
             {
@@ -127,16 +128,16 @@ namespace SkiJump
 
                 int styleIndex = 0;
                 int windIndex = 0;
-                foreach (TextBox textBox in this.Controls.OfType<TextBox>())
+                foreach (TextBox textBox in Controls.OfType<TextBox>())
                 {
                     if (textBox.Tag != null)
                     {
                         if (textBox.Tag.ToString() == "style")
                         {
                             float stylePoints = float.Parse(textBox.Text);
-                            if (stylePoints > 20)
+                            if (stylePoints > 20 || stylePoints < 0)
                             {
-                                MessageBox.Show("Tyylipisteet liian suuret", "Virheellinen tieto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show(@"Tyylipisteet tulee antaa väliltä 0 - 20 ", @"Virheellinen arvo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 return;
                             }
 
@@ -154,12 +155,12 @@ namespace SkiJump
                 } // add more try catches if needed to seperaded errors
                 float jumpLenght = float.Parse(txbJumpLenght.Text);
 
-                jumpPoints = pointsHandler.CalculatePoints(jumpLenght, styleTable, windTable);
+                jumpPoints = _pointsHandler.CalculatePoints(jumpLenght, styleTable, windTable);
 
             }
             catch
             {
-                MessageBox.Show("Väärin meni", "Virheellinen arvo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"Olet syöttänyt väärän arvon", @"Virheellinen tieto", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             SetJumperResultList(jumpPoints);
         } // end CalculateJump
@@ -167,17 +168,17 @@ namespace SkiJump
 
         private void SetJumperResultList(float jumpPoints)
         {
-            currentJumper.points += jumpPoints;
+            _currentJumper.Points += jumpPoints;
 
-            resultList.Add(currentJumper);
-            resultList = resultList.OrderByDescending(currentJumper => currentJumper.points).ToList();
+            _resultList.Add(_currentJumper);
+            _resultList = _resultList.OrderByDescending(currentJumper => currentJumper.Points).ToList();
 
             dgvJumpResults.Rows.Clear();
 
             int placeIndex = 1;
-            foreach (Jumper jumper in resultList)
+            foreach (Jumper jumper in _resultList)
             {
-                string[] row = new string[] { placeIndex.ToString(), jumper.name, jumper.points.ToString() };
+                string[] row = new string[] { placeIndex.ToString(), jumper.Name, jumper.Points.ToString(CultureInfo.InvariantCulture) };
                 dgvJumpResults.Rows.Add(row);
                 placeIndex++;
             }
@@ -189,47 +190,47 @@ namespace SkiJump
 
         private void SetNextJumper()
         {
-            bool removeCurrentJumper = currentJumper != null;
+            bool removeCurrentJumper = _currentJumper != null;
             if (removeCurrentJumper)
             {
-                jumpOrderList.Remove(currentJumper);
-                currentJumperIndex++;
+                _jumpOrderList.Remove(_currentJumper);
+                _currentJumperIndex++;
             }
 
-            bool getNextCurrentJumper = jumpOrderList.Count > 0;
+            bool getNextCurrentJumper = _jumpOrderList.Count > 0;
             if (getNextCurrentJumper)
             {
-                currentJumper = jumpOrderList[0];
+                _currentJumper = _jumpOrderList[0];
             }
             else
             {
-                bool secondRound = jumpRound > 0;
+                bool secondRound = _jumpRound > 0;
                 if (secondRound)
                 {
-                    jumpRound++;
-                    List<Jumper> newJumpOrder = resultList.OrderBy(currentJumper => currentJumper.points).ToList();
-                    jumpOrderList = newJumpOrder;
+                    _jumpRound++;
+                    List<Jumper> newJumpOrder = _resultList.OrderBy(currentJumper => currentJumper.Points).ToList();
+                    _jumpOrderList = newJumpOrder;
 
-                    currentJumperIndex = 1;
-                    resultList = new List<Jumper>();
+                    _currentJumperIndex = 1;
+                    _resultList = new List<Jumper>();
 
-                    currentJumper = jumpOrderList[0];
+                    _currentJumper = _jumpOrderList[0];
                 }
 
             }
 
-            bool endSkiJumpCup = jumpRound > 2;
+            bool endSkiJumpCup = _jumpRound > 2;
             if (endSkiJumpCup)
             {
-                jumpRound = 0;
-                currentJumper = null;
-                btnCalculatePoints.Text = "Hae Hyppääjät";
+                _jumpRound = 0;
+                _currentJumper = null;
+                btnCalculatePoints.Text = @"Hae Hyppääjät";
             }
 
-            if (currentJumper != null)
+            if (_currentJumper != null)
             {
-                lblRound.Text = "Kierros: " + jumpRound;
-                lblJumper.Text = "Hyppääjä: " + (currentJumperIndex) + "/" + maxJumpers + "\r\n" + currentJumper.name;
+                lblRound.Text = @"Kierros: " + _jumpRound;
+                lblJumper.Text = "Hyppääjä: " + _currentJumperIndex + "/" + _maxJumpers + "\r\n" + _currentJumper.Name;
             }
 
             ClearJumpPointsTextBoxes();
@@ -239,7 +240,7 @@ namespace SkiJump
 
         private void ClearJumpPointsTextBoxes()
         {
-            foreach (TextBox textBox in this.Controls.OfType<TextBox>())
+            foreach (TextBox textBox in Controls.OfType<TextBox>())
             {
                 if (textBox.Tag != null)
                 {
@@ -260,7 +261,7 @@ namespace SkiJump
 
         private void btnCalculatePoints_Click(object sender, EventArgs e)
         {
-            bool getJumpersFirsts = jumpOrderList.Count == 0 || jumpRound == 0;
+            bool getJumpersFirsts = _jumpOrderList.Count == 0 || _jumpRound == 0;
             if (getJumpersFirsts)
             {
                 OpenJumpersForm();
@@ -280,7 +281,7 @@ namespace SkiJump
 
         private void btnJumpers_Click(object sender, EventArgs e)
         {
-            bool changeJumpers = jumpOrderList.Count == 0 || jumpRound == 0; ;
+            bool changeJumpers = _jumpOrderList.Count == 0 || _jumpRound == 0;
             if (changeJumpers)
             {
                 OpenJumpersForm();
@@ -289,8 +290,8 @@ namespace SkiJump
 
         private void OpenJumpersForm()
         {
-            currentJumper = null;
-            FormJumpers jumpersForm = new FormJumpers(jumperManager);
+            _currentJumper = null;
+            FormJumpers jumpersForm = new FormJumpers(_jumperManager);
             jumpersForm.ShowDialog();
             lblCupName.Text = jumpersForm.GetCupName();
             SetjumpOrderList();
@@ -314,7 +315,7 @@ namespace SkiJump
                 e.Handled = true;
             }
 
-            bool acceptOnlyOneComma = (e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1);
+            bool acceptOnlyOneComma = (e.KeyChar == ',') && (((TextBox)sender).Text.IndexOf(',') > -1);
             if (acceptOnlyOneComma)
             {
                 e.Handled = true;
@@ -330,7 +331,7 @@ namespace SkiJump
                 e.Handled = true;
             }
 
-            bool acceptOnlyOneComma = (e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1);
+            bool acceptOnlyOneComma = (e.KeyChar == ',') && (((TextBox)sender).Text.IndexOf(',') > -1);
             if (acceptOnlyOneComma)
             {
                 e.Handled = true;

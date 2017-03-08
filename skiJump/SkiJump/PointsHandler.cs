@@ -31,7 +31,6 @@ namespace SkiJump
 
         public float CalculatePoints(float jumpLenght, float[] styleTable, float[] windTable)
         {
-            float returnValue = 0;
             float first = FirstPoints(jumpLenght);
             float style = StylePoints(styleTable);
             float wind = WindPoints(windTable);
@@ -39,7 +38,7 @@ namespace SkiJump
 
             float summarium = first + style + wind - stage;
 
-            returnValue = summarium;
+            var returnValue = summarium;
             return returnValue;
         }
 
@@ -73,11 +72,7 @@ namespace SkiJump
 
         private float WindPoints(float[] windTable)
         {
-            float windSum = 0;
-            for (int i = 0; i < windTable.Length; i++)
-            {
-                windSum += windTable[i];
-            }
+            float windSum = windTable.Sum();
             float windAvr = windSum / windTable.Length;
 
             decimal windDesimal = Math.Round((decimal)windAvr, 1);

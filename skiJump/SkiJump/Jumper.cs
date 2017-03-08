@@ -17,24 +17,19 @@ namespace SkiJump
 
         }
 
-        ~Jumper()
-        {
-
-        }
-
-        public string name
+        public string Name
         {
             get { return _name; }
             set { _name = value; }
         }
 
-        public float points
+        public float Points
         {
             get { return _points; }
             set { _points = value; }
         }
 
-        public long id
+        public long Id
         {
             get { return _id; }
             set { _id = value; }

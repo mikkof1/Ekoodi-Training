@@ -12,20 +12,20 @@ namespace SkiJump
 {
     public partial class FormTecnical : Form
     {
-        PointsHandler pointsHandler;
+        readonly PointsHandler _pointsHandler;
 
         public FormTecnical( )
         {
             InitializeComponent();
-            pointsHandler = new PointsHandler();
+            _pointsHandler = new PointsHandler();
             SetTowerValues();
         }
 
         private void SetTowerValues()
         {
-            txbKPoint.Text = pointsHandler.GetKPoint().ToString();
-            txbDifficulity.Text = pointsHandler.GetDifficulity().ToString();
-            txbStageHeight.Text = pointsHandler.GetStageHeight().ToString();
+            txbKPoint.Text = _pointsHandler.GetKPoint().ToString();
+            txbDifficulity.Text = _pointsHandler.GetDifficulity().ToString();
+            txbStageHeight.Text = _pointsHandler.GetStageHeight().ToString();
 
         }
 
@@ -38,12 +38,12 @@ namespace SkiJump
                 float multiplier = float.Parse(txbDifficulity.Text);
                 float stage = float.Parse(txbStageHeight.Text);
 
-                pointsHandler.SetTowerDetalies(kPoint,multiplier,stage);
+                _pointsHandler.SetTowerDetalies(kPoint,multiplier,stage);
 
             }
             catch
             {
-                MessageBox.Show("Virheellinen merkki", "Väärä arvo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"Hypyn pituus puuttuu", @"Puutteellinen tieto", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             
         }
@@ -72,7 +72,7 @@ namespace SkiJump
                 e.Handled = true;
             }
 
-            bool acceptOnlyOneComma = (e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1);
+            bool acceptOnlyOneComma = (e.KeyChar == ',') && (((TextBox) sender).Text.IndexOf(',') > -1);
             if (acceptOnlyOneComma)
             {
                 e.Handled = true;
@@ -87,7 +87,7 @@ namespace SkiJump
                 e.Handled = true;
             }
 
-            bool acceptOnlyOneComma = (e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1);
+            bool acceptOnlyOneComma = (e.KeyChar == ',') && (((TextBox) sender).Text.IndexOf(',') > -1);
             if (acceptOnlyOneComma)
             {
                 e.Handled = true;
