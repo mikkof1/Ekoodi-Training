@@ -1,0 +1,54 @@
+.inputForm{
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 400px;
+    margin-bottom: 20px;
+}
+.resultsForm{
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 700px;
+}
+
+td, th{
+    padding-left: 12px;
+}
+#resultsTable th{
+    border: 1px solid black;
+}
+#resultsTable{
+    border-collapse: collapse;
+}
+#resultsTable td{
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+#resultsTable tr:last-child{
+    border-bottom: 1px solid black;
+}
+
+.oddRow{
+    background-color: deepskyblue;
+
+}
+
+.evenRow{
+
+}
+
+button{
+    margin: 15px 5px 5px 5px;
+    padding: 3px 32px 3px 32px;
+    font-size: 12px;
+}
+
+#addButton{
+    text-align: center;
+}
+
+input{
+    width: 200px;
+}
