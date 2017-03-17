@@ -81,7 +81,6 @@ input {
 
 #resultsTable td:last-child, #resultsTable td:nth-child(5) {
     text-align: center;
-
 }
 
 .btnEdit {
@@ -93,6 +92,9 @@ input {
 }
 
 #footer {
+    bottom: 0;
+
+    height: 20px;
     border-radius: 6px;
     padding: 4px;
     width: 700px;

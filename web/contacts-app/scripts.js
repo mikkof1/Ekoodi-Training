@@ -23,9 +23,9 @@ function onClicked() {
     }
     var newContact = createContact();
     if (editMode > -1) {
-        editMode=-1;
         contacts[editMode] = newContact;
         document.getElementById("addButton").innerText = 'Add';
+        editMode=-1;
     }
     else {
         contacts.push(newContact);
@@ -76,7 +76,7 @@ function fillTable() {
         fName.innerText = contacts[i].firstName;
         lName.innerText = contacts[i].lastName;
         pho.innerText = contacts[i].phone;
-        adress.innerText = contacts[i].street + ' , ' + contacts[i].city;
+        adress.innerHTML= googleAdress(contacts[i].street ,contacts[i].city);// contacts[i].street + ' , ' + contacts[i].city;
         edit.innerHTML = '<button class="btnEdit" onclick="onEdit(' + i + ')">Edit</button>';
         del.innerHTML = '<button class="btnDelete" onclick="onDelete(' + i + ')">Delete</button>';
 
@@ -87,6 +87,10 @@ function fillTable() {
             row.className = "oddRow";
         }
     }
+}
+
+function googleAdress(street, city) {
+    return '<a href="https://www.google.fi/maps/place/'+street+',+'+city+'" target="_blank">'+street + ' , ' + city+'</a>';
 }
 
 function emptyInputs() {
@@ -114,5 +118,6 @@ function onDelete(delIndex) {
         }
     }
     contacts = editTable;
+    saveData();
     fillTable();
 }
