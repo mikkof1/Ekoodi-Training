@@ -111,6 +111,10 @@ function onEdit(editIndex) {
 }
 
 function onDelete(delIndex) {
+    if(editMode>-1){
+        alert('Hey, edit first');
+        return;
+    }
     var editTable = [];
     for (var i = 0; i < contacts.length; i++) {
         if (i != delIndex) {
