@@ -1,6 +1,6 @@
 
 * {
-    font-family: Calibri;
+    font-family: Calibri, sans-serif;
 }
 
 .inputForm {
@@ -70,6 +70,9 @@ input {
     border-right: 1px solid black;
 }
 
+#resultsTable tr:hover{
+    background: linear-gradient(lightslategray , whitesmoke);
+}
 .oddRow {
     background: aquamarine;
     background: linear-gradient(aquamarine, whitesmoke);
