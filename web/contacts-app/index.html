@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="style.css"/>
     <script src="scripts.js"></script>
 </head>
-<body>
+<body onload="onLoad()">
 <div class="inputForm">
 <h2>New Contact</h2>
 <table id="inputTable">
@@ -16,22 +16,22 @@
     <tr><td>Street address</td><td><input id="street" type="text" ></td></tr>
     <tr><td>City</td><td><input id="city" type="text" ></td></tr>
 </table>
-<div id="addButton" ><button onclick="onClicked()">Add</button></div>
+<div id="addButtonDiv" ><button id="addButton" onclick="onClicked()">Add</button></div>
 </div>
 
 <div class="resultsForm">
 <h2>Contacts</h2>
 <table id ="resultsTable">
-    <thead>
         <tr>
             <th>First name</th>
             <th>Last name</th>
             <th>Phone</th>
             <th>Address</th>
+            <th></th>
+            <th></th>
         </tr>
-    </thead>
 </table>
 </div>
-
+<div id="footer">Mikko Laitinen &copy 2017</div>
 </body>
 </html>
