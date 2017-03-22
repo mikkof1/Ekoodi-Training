@@ -24,6 +24,33 @@ namespace WebApi.Controllers
             iban.CorrectNumber = _ibanService.CheckIbanNumber(iban.IbanNumber);
             return iban;
         }
+
+        public string Get(string id)
+        {
+            return "Get " + id;
+        }
+
+        //public string Get(Iban id) // ei toimi
+        //{
+        //    if (id == null || id.IbanNumber == null)
+        //    {
+        //        return null;
+        //    }
+        //    return "Hello: " + id.IbanNumber + " : " + id.CorrectNumber;
+        //}
+
+        public string Delete(Iban id)
+        {
+            if (id == null || id.IbanNumber == null)
+            {
+                return null;
+            }
+            Iban iban = new Iban(id.IbanNumber);
+            iban.CorrectNumber = _ibanService.CheckIbanNumber(iban.IbanNumber);
+            return "Delete "+ iban.IbanNumber;
+        }
+
+
     }
 
 }
