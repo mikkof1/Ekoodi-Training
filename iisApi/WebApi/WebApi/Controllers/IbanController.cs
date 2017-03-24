@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using WebApi.Models;
 using WebApi.Services;
+//using System.Web.Http.Cors;
 
 namespace WebApi.Controllers
 {
@@ -14,7 +15,7 @@ namespace WebApi.Controllers
         private readonly IbanService _ibanService = new IbanService();
 
         [HttpPost]
-        public Iban Post(Iban id)
+        public Iban Post([FromBody]Iban id)
         {
             if (id == null || id.IbanNumber == null)
             {
@@ -25,9 +26,13 @@ namespace WebApi.Controllers
             return iban;
         }
 
-        public string Get(string id)
+
+       // [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public Iban Get(string id)
         {
-            return "Get " + id;
+            Iban uusi = new Iban("123456789");
+            return uusi;
+          //  return "Return this: " + id;
         }
 
         //public string Get(Iban id) // ei toimi
@@ -49,6 +54,7 @@ namespace WebApi.Controllers
             iban.CorrectNumber = _ibanService.CheckIbanNumber(iban.IbanNumber);
             return "Delete "+ iban.IbanNumber;
         }
+
 
 
     }
