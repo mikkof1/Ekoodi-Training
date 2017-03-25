@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<ArrayOfContact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Contact>
+    <id>1</id>
+    <firstName>Aku</firstName>
+    <lastName>Ankka</lastName>
+    <phone>456-789789</phone>
+    <adress>Paratiisitie 13</adress>
+    <city>Ankkalinna</city>
+  </Contact>
+  <Contact>
+    <id>2</id>
+    <firstName>Teppo</firstName>
+    <lastName>Tulppu</lastName>
+    <phone>456-123123</phone>
+    <adress>Paratiisitie 14</adress>
+    <city>Ankkalinna</city>
+  </Contact>
+  <Contact>
+    <id>3</id>
+    <firstName>Bruce</firstName>
+    <lastName>Wayne</lastName>
+    <phone>555-666 123</phone>
+    <adress>Wayne Manor</adress>
+    <city>Gotham City</city>
+  </Contact>
+  <Contact>
+    <id>11</id>
+    <firstName>Paavo</firstName>
+    <lastName>Pesusieni</lastName>
+    <phone>777-89456123</phone>
+    <adress>124 Conch St.</adress>
+    <city>Bikini Bottom</city>
+  </Contact>
+  <Contact>
+    <id>11</id>
+    <firstName>Peter</firstName>
+    <lastName>Parker</lastName>
+    <phone>555-4567</phone>
+    <adress>Top of </adress>
+    <city>New York</city>
+  </Contact>
+  <Contact>
+    <id>11</id>
+    <firstName> Hankala</firstName>
+    <lastName> N I M I N E N</lastName>
+    <phone>#&lt;br&gt;//rr</phone>
+    <adress>ÄÄkös osasto   </adress>
+    <city>  Kyy lä   </city>
+  </Contact>
+</ArrayOfContact>
