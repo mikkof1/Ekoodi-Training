@@ -5,7 +5,7 @@
     <firstName>Aku</firstName>
     <lastName>Ankka</lastName>
     <phone>456-789789</phone>
-    <adress>Paratiisitie 13</adress>
+    <address>Paratiisitie 13</address>
     <city>Ankkalinna</city>
   </Contact>
   <Contact>
@@ -13,7 +13,7 @@
     <firstName>Teppo</firstName>
     <lastName>Tulppu</lastName>
     <phone>456-123123</phone>
-    <adress>Paratiisitie 14</adress>
+    <address>Paratiisitie 14</address>
     <city>Ankkalinna</city>
   </Contact>
   <Contact>
@@ -21,31 +21,15 @@
     <firstName>Bruce</firstName>
     <lastName>Wayne</lastName>
     <phone>555-666 123</phone>
-    <adress>Wayne Manor</adress>
+    <address>Wayne Manor</address>
     <city>Gotham City</city>
   </Contact>
   <Contact>
     <id>11</id>
-    <firstName>Paavo</firstName>
-    <lastName>Pesusieni</lastName>
-    <phone>777-89456123</phone>
-    <adress>124 Conch St.</adress>
-    <city>Bikini Bottom</city>
-  </Contact>
-  <Contact>
-    <id>11</id>
-    <firstName>Peter</firstName>
-    <lastName>Parker</lastName>
-    <phone>555-4567</phone>
-    <adress>Top of </adress>
-    <city>New York</city>
-  </Contact>
-  <Contact>
-    <id>11</id>
-    <firstName> Hankala</firstName>
-    <lastName> N I M I N E N</lastName>
-    <phone>#&lt;br&gt;//rr</phone>
-    <adress>ÄÄkös osasto   </adress>
-    <city>  Kyy lä   </city>
+    <firstName>555</firstName>
+    <lastName>444</lastName>
+    <phone>3333</phone>
+    <address>22222</address>
+    <city>11111</city>
   </Contact>
 </ArrayOfContact>

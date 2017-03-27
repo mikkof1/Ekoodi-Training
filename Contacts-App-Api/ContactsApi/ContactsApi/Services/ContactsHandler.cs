@@ -8,20 +8,17 @@ using System.IO;
 
 namespace ContactsApi.Services
 {
-    public class ContatsHandler
+    public class ContactsHandler
     {
-        static List<Contact> _contactsList = new List<Contact>();
-        static int _id = 10;
-        readonly string _filePath = HttpContext.Current.Server.MapPath("~/App_Data") + "\\data.xml";
+        private static List<Contact> _contactsList = new List<Contact>();
+        private static int _id = 10;
+        private readonly string _filePath = HttpContext.Current.Server.MapPath("~/App_Data") + "\\data.xml";
 
-        bool testList = false;
+        private bool _makeTestList = true;
 
-        public ContatsHandler()
+        public ContactsHandler()
         {
             ReadListXml();
-
-            bool testIsRunning = testList && _id == 10;
-            if (testIsRunning) _contactsList = TestContactsList();
         }
 
         public List<Contact> GetList()
@@ -66,6 +63,15 @@ namespace ContactsApi.Services
 
         private void ReadListXml()
         {
+            if (!File.Exists(_filePath))
+            {
+                if (_makeTestList)
+                {
+                    _contactsList = TestContactsList();
+                    _makeTestList = false;
+                }
+                SaveDataXml();
+            }
             StreamReader reader = new StreamReader(_filePath);
             XmlSerializer serializer = new XmlSerializer(typeof(List<Contact>));
             _contactsList = (List<Contact>)serializer.Deserialize(reader);
@@ -85,31 +91,37 @@ namespace ContactsApi.Services
         {
             List<Contact> contactsList = new List<Contact>();
 
-            Contact con1 = new Contact();
-            con1.id = 1;
-            con1.firstName = "Aku";
-            con1.lastName = "Ankka";
-            con1.phone = "456-789789";
-            con1.adress = "Paratiisitie 13";
-            con1.city = "Ankkalinna";
+            Contact con1 = new Contact
+            {
+                id = 1,
+                firstName = "Aku",
+                lastName = "Ankka",
+                phone = "456-789789",
+                address = "Paratiisitie 13",
+                city = "Ankkalinna"
+            };
             contactsList.Add(con1);
 
-            Contact con2 = new Contact();
-            con2.id = 2;
-            con2.firstName = "Teppo";
-            con2.lastName = "Tulppu";
-            con2.phone = "456-123123";
-            con2.adress = "Paratiisitie 14";
-            con2.city = "Ankkalinna";
+            Contact con2 = new Contact()
+            {
+                id = 2,
+                firstName = "Teppo",
+                lastName = "Tulppu",
+                phone = "456-123123",
+                address = "Paratiisitie 14",
+                city = "Ankkalinna"
+            };
             contactsList.Add(con2);
 
-            Contact con3 = new Contact();
-            con3.id = 3;
-            con3.firstName = "Bruce";
-            con3.lastName = "Wayne";
-            con3.phone = "555-666 123";
-            con3.adress = "Wayne Manor";
-            con3.city = "Gotham City";
+            Contact con3 = new Contact()
+            {
+                id = 3,
+                firstName = "Bruce",
+                lastName = "Wayne",
+                phone = "555-666 123",
+                address = "Wayne Manor",
+                city = "Gotham City"
+            };
             contactsList.Add(con3);
 
             return contactsList;

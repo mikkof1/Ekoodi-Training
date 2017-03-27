@@ -13,14 +13,14 @@ contactsApp.contactsTable = (function () {
             var fName = row.insertCell(0);
             var lName = row.insertCell(1);
             var pho = row.insertCell(2);
-            var adress = row.insertCell(3);
+            var address = row.insertCell(3);
             var edit = row.insertCell(4);
             var del = row.insertCell(5);
 
             fName.innerText = contact.firstName;
             lName.innerText = contact.lastName;
             pho.innerText = contact.phone;
-            adress.innerHTML = googleAdress(contact.adress, contact.city);
+            address.innerHTML = googleAdress(contact.address, contact.city);
             edit.innerHTML = '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="contactsApp.buttons().startEdit(' + i + ')">Edit</button>';
             del.innerHTML = '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="contactsApp.buttons().onDelete(' + i + ')">Delete</button>';
 

@@ -7,12 +7,12 @@ contactsApp.buttons = function () {
         var contact = buildInputContact();
 
         if (modifyIndex > -1) {
-			contactsApp.contactStore.editItem(contact);
+            contactsApp.contactStore.editItem(contact);
         }
         else {
             contactsApp.contactStore.saveContact(contact);
         }
-		
+
         modifyIndex = -1;
         document.getElementById("addButton").innerText = 'Add';
         emptyInputs();
@@ -26,28 +26,28 @@ contactsApp.buttons = function () {
     }
 
     function buildInputContact() {
-		var id=-1;
-		if(modifyIndex>-1){
-			id=contactsList[modifyIndex].id;
-		}
-	
+        var id = -1;
+        if (modifyIndex > -1) {
+            id = contactsList[modifyIndex].id;
+        }
+
         var contact = contactsApp.contact(
-			id,
+            id,
             document.getElementById('firstName').value,
             document.getElementById('lastName').value,
             document.getElementById('phone').value,
-            document.getElementById('adress').value,
+            document.getElementById('address').value,
             document.getElementById('city').value
         );
         return contact;
     }
 
     function startEdit(editIndex) {
-        
+
         document.getElementById("firstName").value = contactsList[editIndex].firstName;
         document.getElementById("lastName").value = contactsList[editIndex].lastName;
         document.getElementById("phone").value = contactsList[editIndex].phone;
-        document.getElementById("adress").value = contactsList[editIndex].adress;
+        document.getElementById("address").value = contactsList[editIndex].address;
         document.getElementById("city").value = contactsList[editIndex].city;
         document.getElementById("addButton").innerText = 'Edit';
     }
@@ -58,7 +58,7 @@ contactsApp.buttons = function () {
             alert('Hello, edit first');
             return;
         }
-		var contact = contactsList[delIndex];
+        var contact = contactsList[delIndex];
         contactsApp.contactStore.removeItem(contact);
     }
 
