@@ -10,7 +10,7 @@
     <script type="text/javascript" src="playGame.js"></script>
 
 </head>
-<body onload="gameApp.drawGame().draw()">
+<body onload="">
 
 <div id="header"><h2>Blocker game</h2></div>
 <div id="points"></div>
@@ -25,7 +25,7 @@
     <div id="move">
     <button id="left" onclick=""> left </button>
     <button id="right" onclick=""> right </button>
-    <button id="btnUp" onmousedown="gameApp.playGame.goUp()" > up </button>
+    <button id="btnUp" onmousedown="gameApp.playGame.goUpUp()" onmouseup="gameApp.playGame.goUpDown" > up </button>
     <button id="btnDown" onmousedown="gameApp.playGame.goDown()"> down </button>
 
     </div>
@@ -35,11 +35,13 @@
     var canvas = document.getElementById("gameCanvas");
     var hei = canvas.height;
     var wid = canvas.width;
+document.addEventListener('keydown', gameApp.playGame.doKeyDown, true);
 
-    var evil1 = gameApp.player(wid-30, 0, 30, 400, "red");
-    var evil2 = gameApp.player(wid-30, 100, 30, 50, "white");
 
-    var player = gameApp.player(30, hei / 2, 50, 50, "violet");
+    var evil1;// = gameApp.player(wid-30, 0, 30, 400, "red");
+    var evil2;// = gameApp.player(wid-30, 100, 30, 80, "white");
+
+    var player;// = gameApp.player(30, hei / 2, 50, 50, "violet");
 
 </script>
 
