@@ -14,20 +14,13 @@ namespace WebApi.Services
     {
         private static List<Contact> _contactsList = new List<Contact>();
         private static int _id = 10;
-        private readonly string _filePath = "c:\\data.xml";// = HttpContext.Current.Server.MapPath("~/App_Data") + "\\data.xml";
+        private readonly string _filePath = "d:\\data.txt";
 
         private bool _makeTestList = true;
 
         public ContactsHandler()
         {
-            //      ReadListXml();
-            if (_makeTestList && _id == 10)
-            {
-                _contactsList = TestContactsList();
-                _makeTestList = false;
-
-               
-            }
+            ReadListXml();
         }
 
         public List<Contact> GetList()
@@ -40,7 +33,7 @@ namespace WebApi.Services
             _id++;
             newContact.id = _id;
             _contactsList.Add(newContact);
-            //    SaveDataXml();
+            SaveDataJson();
             return _id;
         }
 
@@ -53,7 +46,7 @@ namespace WebApi.Services
 
             int index = _contactsList.FindIndex(c => c.id == contact.id);
             _contactsList[index] = contact;
-            //    SaveDataXml();
+            SaveDataJson();
             return true;
         }
 
@@ -66,7 +59,7 @@ namespace WebApi.Services
 
             int index = _contactsList.FindIndex(c => c.id == contact.id);
             _contactsList.RemoveAt(index);
-            //   SaveDataXml();
+            SaveDataJson();
             return true;
         }
 
@@ -81,17 +74,16 @@ namespace WebApi.Services
                 }
                 SaveDataJson();
             }
-            //StreamReader reader = new StreamReader(_filePath);
-            //XmlSerializer serializer = new XmlSerializer(typeof(List<Contact>));
-            //_contactsList = (List<Contact>)serializer.Deserialize(reader);
-            //reader.Close();
+
+            string data = File.ReadAllText(_filePath);
+            _contactsList = JsonConvert.DeserializeObject<List<Contact>>(data);
+
         }
 
         private void SaveDataJson()
         {
-            FileStream writer = new FileStream(_filePath, FileMode.Create);
             string jsonList = JsonConvert.SerializeObject(_contactsList);
-            
+            File.WriteAllText(_filePath, jsonList);
         }
 
         private List<Contact> TestContactsList()
