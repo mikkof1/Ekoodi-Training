@@ -1,0 +1,18 @@
+*{
+    border: 1px solid black;
+}
+body{
+    text-align: center;
+}
+#header{
+    padding: 3px;
+}
+
+#canvasDiv{
+
+
+}
+#footer{
+    padding: 3px;
+    bottom: 0;
+}
