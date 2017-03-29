@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="style.css"/>
     <script type="text/javascript" src="app.js"></script>
     <script type="text/javascript" src="player.js"></script>
+    <script type="text/javascript" src="evilWall.js"></script>
     <script type="text/javascript" src="drawGame.js"></script>
     <script type="text/javascript" src="playGame.js"></script>
 
@@ -13,35 +14,33 @@
 <body onload="">
 
 <div id="header"><h2>Blocker game</h2></div>
-<div id="points"></div>
+<div id="points">Points:</div>
 <div id="canvasDiv">
     <canvas id="gameCanvas" width="600" height="400"></canvas>
 
 </div>
 <div id="buttons">
     <div id="start">
-<button id="btnStart" onclick="gameApp.playGame.onStart()">Start game</button>
+        <button id="btnStart" onclick="gameApp.playGame.onStart()">Start game</button>
     </div>
     <div id="move">
-    <button id="left" onclick=""> left </button>
-    <button id="right" onclick=""> right </button>
-    <button id="btnUp" onmousedown="gameApp.playGame.goUpUp()" onmouseup="gameApp.playGame.goUpDown" > up </button>
-    <button id="btnDown" onmousedown="gameApp.playGame.goDown()"> down </button>
+        <button id="left" onclick=""> left</button>
+        <button id="right" onclick=""> right</button>
+        <button id="btnUp" onmousedown="gameApp.playGame.goUpUp()" onmouseup="gameApp.playGame.goUpDown"> up</button>
+        <button id="btnDown" onmousedown="gameApp.playGame.goDown()"> down</button>
 
     </div>
 </div>
+
+<div id="tieto">Tieto:</div>
+
 <div id="footer"> Mikko Laitinen 2017</div>
 <script>
+    document.addEventListener('keydown', gameApp.playGame.doKeyDown, true);
     var canvas = document.getElementById("gameCanvas");
-    var hei = canvas.height;
-    var wid = canvas.width;
-document.addEventListener('keydown', gameApp.playGame.doKeyDown, true);
-
-
-    var evil1;// = gameApp.player(wid-30, 0, 30, 400, "red");
-    var evil2;// = gameApp.player(wid-30, 100, 30, 80, "white");
-
-    var player;// = gameApp.player(30, hei / 2, 50, 50, "violet");
+    var evil1;
+    var evil2;
+    var player;
 
 </script>
 

@@ -2,96 +2,142 @@
  * Created by ekoodi on 28.3.2017.
  */
 gameApp.drawGame = function () {
-  // https://www.kirupa.com/html5/animating_many_things_on_a_canvas.htm
-   // var canvas = document.getElementById("gameCanvas");
+    // https://www.kirupa.com/html5/animating_many_things_on_a_canvas.htm
+    // var canvas = document.getElementById("gameCanvas");
     var ctx = canvas.getContext("2d");
 //	var ctxHero = canvas.getContext("2d");
 //	 var ctxEvil = canvas.getContext("2d");
-	//var evilWallTimer;
-	//var heroTimer;
-	var gameOn=true;
-	var rounds=3;
-	var evilSpeed=3;
-	var backColor="#ffe6cc";
+    var newWalltimer = 0;
+    var timer;
+    var gameOn = true;
+    //  var rounds = 3;
+    var evilSpeed = 2;
+    var backColor = "#ffe6cc";
+    var evilWalls = [];
+    var safeHight = 80;
 
 
     function drawGame() {
-		
-		setPlayer();
-		 newEvilWall();
-  //  evilWallTimer = setInterval(draw,20);
-	// heroTimer=setInterval(moveHero,10);
-		// drawHero();	
-		draw();
+
+        setPlayer();
+        //newEvilWall();
+        //  evilWallTimer = setInterval(draw,20);
+        timer = setInterval(clock, 10);
+        // drawHero();
+        draw();
 
     }
-	
-	function draw(){
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		ctx.fillStyle = backColor;
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = backColor;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-		evilUpdate();
-		heroUpdate();
-		if(gameOn){
-		requestAnimationFrame(draw);
-		}
-	}
-	/*
-	function drawHero(){
-		ctxHero.clearRect(0, 0, canvas.width, canvas.height);
+        evilUpdate();
+        heroUpdate();
+        if (gameOn) {
+            requestAnimationFrame(draw);
+        }
+        else
+        {
+            ctx.font = "100px Comic Sans MS";
+            ctx.fillStyle = "green";
+            ctx.textAlign = "center";
+            ctx.fillText("Game Over", canvas.width/2, canvas.height/2);
+        }
+    }
 
-		heroUpdate();
-		
-		requestAnimationFrame(drawHero);
-		
-	}*/
-	
-	function evilUpdate() {
-          //  ctx.clearRect(0, 0, canvas.width, canvas.height);
-            evil1.x -= evilSpeed;
-            ctx.fillStyle = evil1.color;
-            ctx.fillRect(evil1.x, evil1.y, evil1.width, evil1.height);
-            evil2.x -= evilSpeed;
-            ctx.fillStyle = backColor;
-            ctx.fillRect(evil2.x, evil2.y, evil2.width, evil2.height);
-			
-			var stopTheEvilWall=evil1.x< -1*evil1.width;			
-            if(stopTheEvilWall) {
-			//clearInterval(evilWallTimer);
-				newEvilWall();
-				rounds--;
-				if(rounds<1){
-					gameOn=false;
-				}
-			}
+    function clock() {
 
+        if (newWalltimer < 0 && gameOn) {
+            newWalltimer = Math.floor(Math.random() * 280) + 180;
+            newEvilWall();
+        }
+        newWalltimer--;
+
+        document.getElementById("tieto").innerText = "evilwalls: " + evilWalls.length;
+    }
+
+
+    function evilUpdate() {
+
+        for (var i = 0; i < evilWalls.length; i++) {
+            evilWalls[i].x -= evilSpeed;
+            ctx.fillStyle = evilWalls[i].color;
+            // upper wall
+            ctx.fillRect(evilWalls[i].x, evilWalls[i].upperY, evilWalls[i].width, evilWalls[i].upperHeight);
+            // downer wall
+            ctx.fillRect(evilWalls[i].x, evilWalls[i].downerY, evilWalls[i].width, evilWalls[i].downerHeight);
+
+            var safeY1 = evilWalls[i].upperY + evilWalls[i].upperHeight;
+            var safeY2 = evilWalls[i].downerY;
+
+            if ((evilWalls[i].x <= player.x + player.width) && evilWalls[i].x + evilWalls[i].width > player.x) {
+                if (player.y < safeY1 || player.y + player.height > safeY2) {
+                    gameOn = false;
+                }
+
+            }
+
+
+            var evilWallHitsEnd = evilWalls[i].x < -1 * evilWalls[i].width;
+            if (evilWallHitsEnd) {
+                //clearInterval(evilWallTimer);
+                //  newEvilWall();
+                //  rounds--;
+                //  if (rounds < 1) {
+                //  gameOn = false;
+                //  }
+            }
 
         }
-		
-	function heroUpdate(){
-		
-		ctx.fillStyle = player.color;
+
+
+    }
+
+    function heroUpdate() {
+
+        ctx.fillStyle = player.color;
         ctx.fillRect(player.x, player.y, player.width, player.height);
-		
-	}
-	
-	function newEvilWall(){
-		var cHei=canvas.height;
-        var cWid=canvas.width;
-		var place = Math.floor((Math.random() * cHei-160-40)+80+40);
-		 evil1 = gameApp.player(wid-30, 0, 30, cHei, "red");
-		 evil2 = gameApp.player(wid-30, place, 30, 80, "white");
-	}
-	
-	function setPlayer(){
-		 player = gameApp.player(30, hei / 2, 50, 50, "violet");
-	}
+
+    }
+
+
+    function newEvilWall() {
+        var id = 0;
+        var upperHeight = Math.floor((Math.random() * (canvas.height - safeHight )));
+        var downerY = upperHeight + safeHight;
+        var downerHeigth = canvas.height - downerY;
+        var color = "red";
+        var width = 20;
+
+        for (var i = 0; i < evilWalls.length; i++) {
+            if (evilWalls[i].x + evilWalls[i].width + 5 < 0) {
+                id = evilWalls[i].id;
+                break;
+            }
+        }
+        if (id == 0) {
+            id = evilWalls.length + 1;
+        }
+
+        var evil = gameApp.evilWall(id, canvas.width, 0, upperHeight, downerY, downerHeigth, width, color);
+
+
+        if (evilWalls.length == evil.id - 1)
+            evilWalls.push(evil);
+        else
+            evilWalls[evil.id - 1] = evil;
+    }
+
+    function setPlayer() {
+        player = gameApp.player(30, canvas.height / 2 - 25, 50, 50, "violet");
+    }
 
     return {
-        draw:function () {
+        draw: function () {
             drawGame();
         },
-		
+
 
     }
 }

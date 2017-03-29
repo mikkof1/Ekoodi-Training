@@ -1,18 +1,20 @@
-*{
+* {
     border: 1px solid black;
 }
-body{
+
+body {
     text-align: center;
 }
-#header{
+
+#header {
     padding: 3px;
 }
 
-#canvasDiv{
-
+#canvasDiv {
 
 }
-#footer{
+
+#footer {
     padding: 3px;
     bottom: 0;
 }
