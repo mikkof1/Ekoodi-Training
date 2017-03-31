@@ -8,7 +8,8 @@
     <script type="text/javascript" src="player.js"></script>
     <script type="text/javascript" src="evilWall.js"></script>
     <script type="text/javascript" src="drawGame.js"></script>
-    <script type="text/javascript" src="playGame.js"></script>
+
+
 
 </head>
 <body onload="">
@@ -35,12 +36,29 @@
 <div id="tieto">Tieto:</div>
 
 <div id="footer"> Mikko Laitinen 2017</div>
+<div id="tieto2"> </div>
+    <script type="text/javascript" src="playGame.js"></script>
 <script>
-    document.addEventListener('keydown', gameApp.playGame.doKeyDown, true);
-    var canvas = document.getElementById("gameCanvas");
-    var evil1;
-    var evil2;
-    var player;
+  //  document.addEventListener('keydown', gameApp.playGame.doKeyDown, true);
+	var player;
+	gameApp.drawGame().drawDefault();
+	var youCanPlay=true;
+	
+	var mover;
+	var pohjassa =false;
+	var keyState={};
+	window.addEventListener('keydown', function(e){
+		
+		gameApp.playGame.keyDown(e);
+	}, true);
+	window.addEventListener('keyup', function(e){
+		keyState[e.keyCode || e.which]= false;
+	//	gameApp.playGame.keyUp(e);
+				keyState[e.keyCode || e.which]= false;
+			 clearTimeout(mover);
+			 pohjassa =false;
+	}, true);
+	
 
 </script>
 
