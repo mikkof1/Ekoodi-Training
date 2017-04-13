@@ -32,4 +32,20 @@
     <address>22222</address>
     <city>11111</city>
   </Contact>
+  <Contact>
+    <id>11</id>
+    <firstName>pekka</firstName>
+    <lastName>pouta</lastName>
+    <phone>456-789789</phone>
+    <address>Paratiisitie 13</address>
+    <city>Ankkalinna</city>
+  </Contact>
+  <Contact>
+    <id>12</id>
+    <firstName>Paavo</firstName>
+    <lastName>pouta</lastName>
+    <phone>456-222222</phone>
+    <address>Paratiisitie 13</address>
+    <city>Ankkalinna</city>
+  </Contact>
 </ArrayOfContact>
