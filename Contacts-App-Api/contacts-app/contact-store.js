@@ -3,8 +3,8 @@
  */
 
 contactsApp.contactStore = (function () {
-      var apiUrl = "http://localhost:51343/api/contacts/";
-   // var apiUrl = "http://localhost:49478/api/contacts/";
+      //   var apiUrl = "http://localhost:51343/api/contacts/";
+ var apiUrl = "http://localhost:49478/api/contacts/";
     var mediaType = "application/json; charset=utf-8;";
 
     function loadLocalStorage() {
